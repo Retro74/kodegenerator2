@@ -1,0 +1,125 @@
+body{
+    margin:0;
+}
+body > .genContainer:first-of-type {
+    float: left;
+    clear: left;
+    margin-top: 0;
+}
+.genContainer{
+    border: solid black;
+    width: 800px;
+    background-color: ivory;
+}
+.inp_txt_class {
+
+}
+input[type="text"], textarea, .selectWidt_class
+{
+    width:400px;
+}
+label {
+    display: block;
+    width:160px;
+}
+
+.upLinkContainer
+{
+    float: right;
+    clear: left;
+    padding-right: 10px;
+
+}
+
+.genContainer, label, button, .outputContainer, .copyToclipboard {
+    float: left;
+    clear: left;
+    padding-left: 10px;
+}
+
+.genContainer {
+    margin-top: 2em;
+}
+.exampleContainer{
+}
+.exampleText{
+    color: chocolate;
+    font-style: italic;
+}
+
+/* ToolTip til overskrift sp.tegn */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: silver;
+    color: #004545;
+    font-size: 15px;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 110%;
+
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    size: 10px;
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+/*--------------------------*/
+
+label  {
+    /*width: 7em;*/
+    text-align: left;
+}
+
+.phpComment{
+    color: #909090;
+}
+
+#button {
+    margin-top: 1em;
+    border: #0a0a0a 2px solid; !important;
+    background-color: silver; !important;
+
+}
+
+.formRow {
+    margin-top: .2em;
+}
+
+.output:not(:empty) {
+    border-style: solid;
+    border-width: .1em;
+    padding: 1em 1em 1em 1em;
+}
+#header{
+
+    padding-left:40px;
+    background: rgba(0, 0, 0, 0) url("http://it-1.no/Images/it/bg_headerwrap.jpg") repeat-x scroll 0 0;
+
+}
+.container{
+    margin-left:50px;
+}
+.PageTitle{
+    font-family: Calibri,Arial,sans-serif;
+    font-size: 18px;
+}

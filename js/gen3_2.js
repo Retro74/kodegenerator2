@@ -1,7 +1,6 @@
-// gen3 widgtet object
-var gen3_2 = (function() {
+// gen3_2 widget object (revidert hybrid-versjon)
+var gen3_2 = (function () {
 
-    // settings
     var s = {
         sql: $('#gen3_2SQL'),
         values: $('#gen3_2Value'),
@@ -10,58 +9,59 @@ var gen3_2 = (function() {
         output: $('#gen3_2Out')
     };
 
-    // self object
     var self = {};
 
-
-    // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
-            self.generate();
-        });
+    self.setupBindings = function () {
+        s.submit.on('click', self.generate);
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode = '&lt?php<div class="phpComment">    //Spørring med parametre fra bruker </div>' +
-            '    $sql = sprintf("' + s.sql.val() + '",\n';
+    self.generate = function () {
 
-        formatedCode +=
-            '<div class="phpComment">    //Setter inn alle brukerverdier</div>';
+        var sql    = (s.sql.val()    || "").trim();
+        var type   = s.type.val();  // GET / POST / SESSION
+        var fields = s.values.val().split(",").map(v => v.trim());
 
-        //Legg til alle brukerverdier
-        var values = s.values.val().split(',');
-        for (var i = 0; i < values.length; i++) {
-            values[i] = values[i].trim()
-        }
-        for (var i =0; i < values.length; i++)
-        {
-            formatedCode +=
-                '        $tilkobling->real_escape_string($_' + s.type.val()  +
-                '["' + values[i] + '"])';
-            if (i+1 < values.length)
-            {
-                formatedCode +=',';
-            }
-            formatedCode +='\n';
-        }
+        // Lag like mange ? som variabler
+        // Elevene må skrive %s i SQL i dag – men vi oversetter til ?
+        // (f.eks. 3 verdier: "?,?,?")
+        var placeholders = fields.map(() => "?").join(", ");
 
-        //Siste del
-        formatedCode +=');\n' +
-            '<div class="phpComment">    //Kjører spørringen mot databasen og resultatet settes i datasettet </div>' +
-            '    $datasett = $tilkobling->query($sql);\n' +
-            '?&gt';
-        
-        s.output.html(formatedCode);
+        // Erstatt alle '%s' i SQL med '?'
+        // Lite hack, men viktig for retro-kompatibilitet
+        sql = sql.replace(/%s/g, "?");
+
+        // Typestreng — antall parametre, alle i denne generatoren er strenger
+        var types = "s".repeat(fields.length);
+
+        // PHP-kode
+        var php = `<?php
+                // Forberedt spørring med flere parametere
+                $stmt = $tilkobling->prepare("${sql}");
+                if(!$stmt){
+                    die("Prepare-feil: " . $tilkobling->error);
+                }
+
+                // Bind-verdier
+                $stmt->bind_param(
+                    "${types}",
+                ${fields.map(f => `    $_${type}["${f}"]`).join(",\n")}
+                );
+
+                $stmt->execute();
+                $datasett = $stmt->get_result();
+
+                if(!$datasett){
+                    die("SQL-feil: " . $tilkobling->error);
+                }
+                ?>`;
+
+        s.output.text(php);
     };
 
-    // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
+
 }());
-                
-                

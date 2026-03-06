@@ -29,10 +29,10 @@ var gen4_2 = (function () {
     /**
      * Returnerer PHP-kode for CSRF-token-validering.
      * Forutsetter at siden starter session og at token er satt i $_SESSION['csrf_token'].
-     * Denne for å verifisere at det er websiden selv som poster og ingen andre
      */
     function csrfCheck() {
         return [
+            '<div class="phpComment">// CSRF-validering</div>',
             'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {',
             '    http_response_code(403);',
             '    die("Ugyldig forespørsel.");',
@@ -62,8 +62,9 @@ var gen4_2 = (function () {
         var code = '';
 
         // ---- PHP-åpning og session/CSRF-oppsett ----
-        code += '<div class="phpComment">// Oppretter en CSRF-token for å verifisere at det er siden selv som sender</div>\n';
-        code += '&lt;?php\n';
+        code += '<?php\n';
+        code += 'session_start();\n\n';
+        code += '<div class="phpComment">// Opprett en CSRF-token hvis den ikke finnes</div>\n';
         code += 'if (empty($_SESSION["csrf_token"])) {\n';
         code += '    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));\n';
         code += '}\n\n';
@@ -100,9 +101,6 @@ var gen4_2 = (function () {
             code += ',\n        $_POST["' + pkField + '"]\n    );\n';
             code += '    $stmt->execute();\n';
             code += '    $stmt->close();\n';
-            code += '<div class="phpComment">// Redirect til visningsmodus etter lagring</div>\n';
-            code += '    header("Location: " . strtok($_SERVER["REQUEST_URI"], "?"));\n';
-            code += '    exit();\n';
             code += '}\n\n';
         }
 

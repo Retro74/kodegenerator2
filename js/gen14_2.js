@@ -1,5 +1,5 @@
-// gen12 widgtet object
-var gen14_2 = (function() {
+// gen14_2 widget object
+var gen14_2 = (function () {
 
     // settings
     var s = {
@@ -8,41 +8,39 @@ var gen14_2 = (function() {
         output: $('#gen14_2Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode =
-            '&lt?php \n' +
-            '    session_unset(); \n' +
-            '    header("location: ' + s.fwdURL.val() + '");\n' +
-            '    exit();\n' +
-            '?&gt';
-        
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var fwdURL = s.fwdURL.val().trim();
+
+        var code = '';
+
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Tøm alle øktvariable (logout)</div>\n';
+        code += 'session_unset();\n\n';
+        code += '<div class="phpComment">// Videresend brukeren etter utlogging</div>\n';
+        code += 'header("Location: ' + fwdURL + '");\n';
+        code += 'exit();\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

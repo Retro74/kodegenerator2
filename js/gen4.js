@@ -1,5 +1,5 @@
-// gen4 widgtet object
-var gen4 = (function() {
+// gen4 widget object
+var gen4 = (function () {
 
     // settings
     var s = {
@@ -9,103 +9,104 @@ var gen4 = (function() {
         output: $('#gen4Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var fields = s.fields.val().split(',');
-        var formatedCode;
-        
-        if(s.type.val() === 'p')
-            this.formatedCode = self.generateP(fields);
-        else if(s.type.val() === 'td')
-            this.formatedCode = self.generateTd(fields);
+    // handlers
+    self.generate = function () {
+        var fields = s.fields.val().split(',').map(function (f) { return f.trim(); });
+        var code;
+
+        if (s.type.val() === 'p')
+            code = self.generateP(fields);
+        else if (s.type.val() === 'td')
+            code = self.generateTd(fields);
         else
-            this.formatedCode = self.generateLi(fields);
-        
-        //clearing output
+            code = self.generateLi(fields);
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(this.formatedCode);
+        s.output.html(code);
     };
-    
-    
+
     // members
-    self.generateP = function(fields) {
-        
-        var returnText = '<div class="phpComment">&lt!-- For hver rad i datasettet, lager PHPkoden ett HTML-avsnitt,\n' +
-            'med feltene: ' + fields + '--&gt</div>'+
-            '&lt?php while($rad = mysqli_fetch_array($datasett)){' +
-            '?&gt\n    &ltp&gt\n';
-        
-        for(var i = 0; i < fields.length; i++){
-           returnText += '        ' + fields[i].trim() + ': &lt?php echo $rad["' + 
-               fields[i].trim() + '"]; ?&gt &ltbr /&gt\n'
-        }
-        
-        returnText += '    &lt/p&gt\n&lt?php } ?&gt';
-        
-        return returnText;
-    }
-    
-    self.generateTd =function(fields) {
-        var returnText = '<div class="phpComment">&lt!-- For hver rad i datasettet, lager PHPkoden en rad i HTML-tabelen ,\n' +
-            'med kolonner for feltene: ' + fields + '--&gt</div>'+
-            '&lttable&gt\n    &lttr&gt';
+    self.generateP = function (fields) {
+        var code = '';
 
-        for(var i = 0; i < fields.length; i++){
-           returnText += '\n        &ltth&gt' + fields[i].trim().charAt(0).toUpperCase() +
-               fields[i].trim().slice(1) +
-               '&lt/th&gt';
-        }
-        
-        returnText += '\n    &lt/tr&gt\n    &lt?php while($rad = mysqli_fetch_array($datasett)) { ?&gt\n        &lttr&gt';
-        
-        for(var i = 0; i < fields.length; i++){
-           returnText += '\n            &lttd&gt&lt?php echo $rad["' + fields[i].trim() + '"]; ?&gt&lt/td&gt';
-        }
-        
-        returnText += '\n        &lt/tr&gt\n    &lt?php } ?&gt\n&lt/table&gt';
-        
-        return returnText;
-    }
-    
-    self.generateLi = function(fields) {
+        code += '<div class="phpComment">&lt;!-- For hver rad i datasettet lager PHP ett HTML-avsnitt\n';
+        code += '     med feltene: ' + fields.join(', ') + ' --&gt;</div>\n';
+        code += '&lt;?php while ($rad = $datasett->fetch_assoc()) { ?&gt;\n';
+        code += '    &lt;p&gt;\n';
 
-        var returnText = '<div class="phpComment">&lt!-- For hver rad i datasettet, lager PHPkoden ett sett med HTML-kulepunkt,\n' +
-            'for feltene: ' + fields + '--&gt</div>'+
-            '&ltul&gt\n';
-		
-		returnText += '    &lt?php while($rad = mysqli_fetch_array($datasett)){' +
-        '?&gt';
-        
-        for(var i = 0; i < fields.length; i++){
-            returnText += '\n        &ltli&gt&lt?php echo $rad["' + fields[i].trim() + '"]; ?&gt&lt/li&gt';
-        }
-        
-		returnText += '\n    &lt?php } ?&gt';
-        returnText += '\n&lt/ul&gt';
-        
-        return returnText;
-    }
+        fields.forEach(function (f) {
+            code += '        ' + f + ': &lt;?php echo htmlspecialchars($rad["' + f + '"]); ?&gt; &lt;br /&gt;\n';
+        });
+
+        code += '    &lt;/p&gt;\n';
+        code += '&lt;?php } ?&gt;';
+
+        return code;
+    };
+
+    self.generateTd = function (fields) {
+        var code = '';
+
+        code += '<div class="phpComment">&lt;!-- For hver rad i datasettet lager PHP en rad i HTML-tabellen\n';
+        code += '     med kolonner for feltene: ' + fields.join(', ') + ' --&gt;</div>\n';
+        code += '&lt;table&gt;\n';
+        code += '    &lt;thead&gt;\n';
+        code += '    &lt;tr&gt;\n';
+
+        fields.forEach(function (f) {
+            code += '        &lt;th&gt;' + f.charAt(0).toUpperCase() + f.slice(1) + '&lt;/th&gt;\n';
+        });
+
+        code += '    &lt;/tr&gt;\n';
+        code += '    &lt;/thead&gt;\n';
+        code += '    &lt;tbody&gt;\n';
+        code += '    &lt;?php while ($rad = $datasett->fetch_assoc()) { ?&gt;\n';
+        code += '        &lt;tr&gt;\n';
+
+        fields.forEach(function (f) {
+            code += '            &lt;td&gt;&lt;?php echo htmlspecialchars($rad["' + f + '"]); ?&gt;&lt;/td&gt;\n';
+        });
+
+        code += '        &lt;/tr&gt;\n';
+        code += '    &lt;?php } ?&gt;\n';
+        code += '    &lt;/tbody&gt;\n';
+        code += '&lt;/table&gt;';
+
+        return code;
+    };
+
+    self.generateLi = function (fields) {
+        var code = '';
+
+        code += '<div class="phpComment">&lt;!-- For hver rad i datasettet lager PHP ett sett med kulepunkt\n';
+        code += '     for feltene: ' + fields.join(', ') + ' --&gt;</div>\n';
+        code += '&lt;ul&gt;\n';
+        code += '    &lt;?php while ($rad = $datasett->fetch_assoc()) { ?&gt;\n';
+
+        fields.forEach(function (f) {
+            code += '        &lt;li&gt;&lt;?php echo htmlspecialchars($rad["' + f + '"]); ?&gt;&lt;/li&gt;\n';
+        });
+
+        code += '    &lt;?php } ?&gt;\n';
+        code += '&lt;/ul&gt;';
+
+        return code;
+    };
 
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

@@ -1,10 +1,4 @@
-// gen8_secure - Sikker versjon av SQL-kjører-generatoren
-// Forbedringer:
-//   - Prepared statements istedenfor sprintf + real_escape_string
-//   - CSRF-token-validering
-//   - POST-validering
-//   - Valgfri redirect beholdt
-
+// gen8 widget object
 var gen8 = (function () {
 
     // settings
@@ -35,7 +29,6 @@ var gen8 = (function () {
         var code = '';
 
         code += '&lt;?php\n';
-        code += 'session_start();\n\n';
 
         // POST-sjekk
         code += '<div class="phpComment">// Sjekk at forespørselen er POST</div>\n';

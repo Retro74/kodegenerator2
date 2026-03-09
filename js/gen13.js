@@ -1,50 +1,51 @@
-// gen13 widgtet object
-var gen13 = (function() {
+// gen13 widget object
+var gen13 = (function () {
 
     // settings
     var s = {
-        sessionName: $('#gen13SessionName'),
+        sessionName:  $('#gen13SessionName'),
         sessionValue: $('#gen13SessionValue'),
-        fwd: $('#gen13Fwd'),
-        submit: $('#gen13Button'),
-        output: $('#gen13Out')
+        fwd:          $('#gen13Fwd'),
+        submit:       $('#gen13Button'),
+        output:       $('#gen13Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode = '&lt?php'+
-            '<div class="phpComment">    //Sjekker om økten: "' + s.sessionName.val() + '", har den gyldige verdien "' + s.sessionValue.val()+ '".</div>' +
-            '    if($_SESSION["' + s.sessionName.val() + '"] != "' + s.sessionValue.val()+ '") {' +
-            '<div class="phpComment">       //Ugyldg øktverdi videresender brukeren til ' + s.fwd.val() + '.</div>'+
-            '       header("Location: ' + s.fwd.val() + '");\n'+
-            '       exit();}\n' +
-            '?&gt';
+    // handlers
+    self.generate = function () {
 
-        //clearing output
+        var sessionName  = s.sessionName.val().trim();
+        var sessionValue = s.sessionValue.val().trim();
+        var fwd          = s.fwd.val().trim();
+
+        var code = '';
+
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Sjekk om økten "' + sessionName + '" har den gyldige verdien "' + sessionValue + '"</div>\n';
+        code += 'if ($_SESSION["' + sessionName + '"] != "' + sessionValue + '") {\n';
+        code += '<div class="phpComment">    // Ugyldig øktverdi - videresend brukeren til ' + fwd + '</div>\n';
+        code += '    header("Location: ' + fwd + '");\n';
+        code += '    exit();\n';
+        code += '}\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

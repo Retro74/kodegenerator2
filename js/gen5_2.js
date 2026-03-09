@@ -1,5 +1,5 @@
-// gen5 widgtet object
-var gen5_2 = (function() {
+// gen5_2 widget object
+var gen5_2 = (function () {
 
     // settings
     var s = {
@@ -9,44 +9,45 @@ var gen5_2 = (function() {
         output: $('#gen5_2Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode = '&lt?php \n ' +
-            '<div class="phpComment">    //Sjekker om spørringen gir et resultat</div>' +
-            '    if($rad = mysqli_fetch_array($datasett)) {\n' +
-            '<div class="phpComment">        //Spørringen gir et resultat</div>' +
-            '        header("Location: ' + s.fwd1.val() + '");\n        exit();' +
-            '} \n    else {\n' +
-            '<div class="phpComment">        //Spørringen gir ikke et resultat</div>' +
-            '        header("Location: ' + s.fwd2.val() + '");\n        exit();}' +
-            '\n?&gt';
-        
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var fwd1 = s.fwd1.val().trim();
+        var fwd2 = s.fwd2.val().trim();
+
+        var code = '';
+
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Sjekk om spørringen gir et resultat</div>\n';
+        code += 'if ($rad = $datasett->fetch_assoc()) {\n';
+        code += '<div class="phpComment">    // Spørringen gir et resultat - videresend</div>\n';
+        code += '    header("Location: ' + fwd1 + '");\n';
+        code += '    exit();\n';
+        code += '} else {\n';
+        code += '<div class="phpComment">    // Spørringen gir ikke et resultat - videresend</div>\n';
+        code += '    header("Location: ' + fwd2 + '");\n';
+        code += '    exit();\n';
+        code += '}\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

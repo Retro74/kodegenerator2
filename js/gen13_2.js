@@ -1,65 +1,57 @@
-// gen13_2 widgtet object
-var gen13_2 = (function() {
+// gen13_2 widget object
+var gen13_2 = (function () {
 
     // settings
     var s = {
-        sessionName: $('#gen13_2SessionName'),
+        sessionName:   $('#gen13_2SessionName'),
         sessionValues: $('#gen13_2SessionValues'),
-        fwd: $('#gen13_2Fwd'),
-        submit: $('#gen13_2Button'),
-        output: $('#gen13_2Out')
+        fwd:           $('#gen13_2Fwd'),
+        submit:        $('#gen13_2Button'),
+        output:        $('#gen13_2Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var values = s.sessionValues.val().split(',');
-        for (var i = 0; i < values.length; i++) {
-            values[i] = values[i].trim()
-        }
-        var formatedCode = '&lt?php' +
-            '<div class="phpComment">    //Sjekker om økten: "' + s.sessionName.val() + '", har noen av de gyldige verdiene "' + values + '".</div>' +
-            '    if(';
+    // handlers
+    self.generate = function () {
 
-        for (var i =0; i < values.length; i++) {
-            formatedCode += '$_SESSION["' + s.sessionName.val() + '"] == "' + values[i] + '"';
-            if(i+1 < values.length){
-                formatedCode += ' || ';
-            }
+        var sessionName   = s.sessionName.val().trim();
+        var values        = s.sessionValues.val().split(',').map(function (v) { return v.trim(); });
+        var fwd           = s.fwd.val().trim();
 
+        var code = '';
 
-        }
-        formatedCode += '){<div class="phpComment">     //OK, du kan være her </div>}\n else {' +
-                '<div class="phpComment">     //Send brukeren ut </div>'+
-            '        header("Location: ' + s.fwd.val() + '");\n    exit();\n' +
-            '        }  \n'+
-        '?&gt';
-        
-        
-        //clearing output
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Sjekk om økten "' + sessionName + '" har en av de gyldige verdiene: ' + values.join(', ') + '</div>\n';
+        code += 'if (\n';
+        code += values.map(function (v) {
+            return '    $_SESSION["' + sessionName + '"] == "' + v + '"';
+        }).join(' ||\n');
+        code += '\n) {\n';
+        code += '<div class="phpComment">    // Gyldig øktverdi - brukeren får tilgang</div>\n';
+        code += '} else {\n';
+        code += '<div class="phpComment">    // Ugyldig øktverdi - videresend brukeren til ' + fwd + '</div>\n';
+        code += '    header("Location: ' + fwd + '");\n';
+        code += '    exit();\n';
+        code += '}\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

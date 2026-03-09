@@ -1,5 +1,5 @@
-// gen7 widgtet object
-var gen7 = (function() {
+// gen7 widget object
+var gen7 = (function () {
 
     // settings
     var s = {
@@ -9,37 +9,36 @@ var gen7 = (function() {
         output: $('#gen7Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-      
-        var formatedCode = '&ltimg src="&lt?php echo $rad["' + s.url.val() + '"]; ?&gt" alt="&lt?php echo $rad["' + s.title.val() + '"]; ?&gt" /&gt';
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var url   = s.url.val().trim();
+        var title = s.title.val().trim();
+
+        var code = '';
+
+        code += '&lt;img ';
+        code += 'src="&lt;?php echo htmlspecialchars($rad["' + url + '"]); ?&gt;" ';
+        code += 'alt="&lt;?php echo htmlspecialchars($rad["' + title + '"]); ?&gt;" /&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
 
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

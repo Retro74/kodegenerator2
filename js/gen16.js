@@ -1,5 +1,5 @@
-// gen16 widgtet object
-var gen16 = (function() {
+// gen16 widget object
+var gen16 = (function () {
 
     // settings
     var s = {
@@ -8,38 +8,37 @@ var gen16 = (function() {
         output: $('#gen16Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode = '&lt?php \n' +
-            '    header("location: ' + s.fwdUrl.val() + '");\n    exit();\n' +
-            '?&gt';
-        
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var fwdUrl = s.fwdUrl.val().trim();
+
+        var code = '';
+
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Videresend brukeren</div>\n';
+        code += 'header("Location: ' + fwdUrl + '");\n';
+        code += 'exit();\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

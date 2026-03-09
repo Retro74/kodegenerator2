@@ -1,11 +1,4 @@
-// gen3_secure - Sikker versjon av SELECT-spørring-generatoren
-// Forbedringer:
-//   - Samme struktur som gen8_secure
-//   - CSRF-token-validering
-//   - POST/GET/SESSION-validering
-//   - Prepared statements beholdt
-//   - Feilhåndtering beholdt
-
+// gen3 widget object
 var gen3 = (function () {
 
     // settings
@@ -54,9 +47,7 @@ var gen3 = (function () {
 
         // Prepared statement
         code += '<div class="phpComment">// Klargjør prepared statement</div>\n';
-        code += '$stmt = $tilkobling->prepare(\n';
-        code += '    "' + sqlTemplate + '"\n';
-        code += ');\n';
+        code += '$stmt = $tilkobling->prepare("' + sqlTemplate + '");\n';
         code += 'if (!$stmt) {\n';
         code += '    die("Prepare-feil: " . $tilkobling->error);\n';
         code += '}\n\n';
@@ -71,8 +62,7 @@ var gen3 = (function () {
         code += '$datasett = $stmt->get_result();\n';
         code += 'if (!$datasett) {\n';
         code += '    die("SQL-feil: " . $tilkobling->error);\n';
-        code += '}\n\n';
-
+        code += '}\n';
         code += '?&gt;';
 
         // Output

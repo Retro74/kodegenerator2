@@ -1,5 +1,5 @@
-// gen9 widgtet object
-var gen9 = (function() {
+// gen9 widget object
+var gen9 = (function () {
 
     // settings
     var s = {
@@ -10,42 +10,42 @@ var gen9 = (function() {
         output: $('#gen9Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-      
-        var formatedCode = '&ltselect name="' + s.id.val() + '"&gt\n' +
-            '<div class="phpComment">//For hver rad i datasettet, lager PHPkoden ett valgt i rullegardinslisten</div>' +
-            '    &lt?php while($rad = mysqli_fetch_array($datasett)) { ?&gt\n        &ltoption value="&lt?php echo $rad["' + s.fk.val() + '"]; ?&gt"&gt';
-        
-        formatedCode += '&lt?php echo $rad["' + s.fields.val() + '"];?&gt';
-        formatedCode += '&lt/option&gt\n    &lt?php } ?&gt\n&lt/select&gt';
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var fields = s.fields.val().trim();
+        var id     = s.id.val().trim();
+        var fk     = s.fk.val().trim();
+
+        var code = '';
+
+        code += '&lt;select name="' + id + '"&gt;\n';
+        code += '<div class="phpComment">// For hver rad i datasettet lager PHP ett valg i nedtrekkslisten</div>\n';
+        code += '    &lt;?php while ($rad = $datasett->fetch_assoc()) { ?&gt;\n';
+        code += '        &lt;option value="&lt;?php echo htmlspecialchars($rad["' + fk + '"]); ?&gt;"&gt;\n';
+        code += '            &lt;?php echo htmlspecialchars($rad["' + fields + '"]); ?&gt;\n';
+        code += '        &lt;/option&gt;\n';
+        code += '    &lt;?php } ?&gt;\n';
+        code += '&lt;/select&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
 
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

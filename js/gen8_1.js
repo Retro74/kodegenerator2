@@ -1,10 +1,4 @@
-// gen8_1_secure - Sikker versjon av SQL-kjører-generatoren
-// Forbedringer:
-//   - Prepared statements istedenfor sprintf + real_escape_string
-//   - CSRF-token-validering
-//   - POST-validering før kjøring
-//   - header() redirect beholdt
-
+// gen8_1 widget object
 var gen8_1 = (function () {
 
     // settings
@@ -35,20 +29,19 @@ var gen8_1 = (function () {
         var code = '';
 
         code += '&lt;?php\n';
-        code += 'session_start();\n\n';
-
-        // CSRF-sjekk
-        code += '<div class="phpComment">// CSRF-validering</div>\n';
-        code += 'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {\n';
-        code += '    http_response_code(403);\n';
-        code += '    die("Ugyldig forespørsel.");\n';
-        code += '}\n\n';
 
         // POST-sjekk
         code += '<div class="phpComment">// Sjekk at forespørselen er POST</div>\n';
         code += 'if ($_SERVER["REQUEST_METHOD"] !== "POST") {\n';
         code += '    http_response_code(405);\n';
         code += '    die("Kun POST er tillatt.");\n';
+        code += '}\n\n';
+
+        // CSRF-sjekk
+        code += '<div class="phpComment">// CSRF-validering</div>\n';
+        code += 'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {\n';
+        code += '    http_response_code(403);\n';
+        code += '    die("Ugyldig forespørsel.");\n';
         code += '}\n\n';
 
         // Prepared statement
@@ -65,7 +58,7 @@ var gen8_1 = (function () {
         code += '\n);\n\n';
 
         // Kjør
-        code += '// Kjør spørringen\n';
+        code += '<div class="phpComment">// Kjør spørringen</div>\n';
         code += '$stmt->execute();\n';
         code += '$stmt->close();\n\n';
 

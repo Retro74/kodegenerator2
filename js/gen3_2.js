@@ -1,6 +1,7 @@
-// gen3_2 widget object (revidert hybrid-versjon)
+// gen3_2 widget object
 var gen3_2 = (function () {
 
+    // settings
     var s = {
         sql: $('#gen3_2SQL'),
         values: $('#gen3_2Value'),
@@ -11,57 +12,71 @@ var gen3_2 = (function () {
 
     var self = {};
 
+    // bindings
     self.setupBindings = function () {
-        s.submit.on('click', self.generate);
+        s.submit.on('click', function () {
+            self.generate();
+        });
     };
 
+    // handlers
     self.generate = function () {
 
-        var sql    = (s.sql.val()    || "").trim();
-        var type   = s.type.val();  // GET / POST / SESSION
-        var fields = s.values.val().split(",").map(v => v.trim());
+        var sqlTemplate = (s.sql.val() || '').trim();
+        var values = s.values.val().split(',').map(function (v) { return v.trim(); });
+        var type = s.type.val(); // POST / GET / SESSION
 
-        // Lag like mange ? som variabler
-        // Elevene må skrive %s i SQL i dag – men vi oversetter til ?
-        // (f.eks. 3 verdier: "?,?,?")
-        var placeholders = fields.map(() => "?").join(", ");
+        var code = '';
 
-        // Erstatt alle '%s' i SQL med '?'
-        // Lite hack, men viktig for retro-kompatibilitet
-        sql = sql.replace(/%s/g, "?");
+        code += '&lt;?php\n';
 
-        // Typestreng — antall parametre, alle i denne generatoren er strenger
-        var types = "s".repeat(fields.length);
+        // CSRF-sjekk kun for POST
+        if (type === 'POST') {
+            code += '<div class="phpComment">// Sjekk at forespørselen er POST</div>\n';
+            code += 'if ($_SERVER["REQUEST_METHOD"] !== "POST") {\n';
+            code += '    http_response_code(405);\n';
+            code += '    die("Kun POST er tillatt.");\n';
+            code += '}\n\n';
 
-        // PHP-kode
-        var php = `<?php
-                // Forberedt spørring med flere parametere
-                $stmt = $tilkobling->prepare("${sql}");
-                if(!$stmt){
-                    die("Prepare-feil: " . $tilkobling->error);
-                }
+            code += '<div class="phpComment">// CSRF-validering</div>\n';
+            code += 'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {\n';
+            code += '    http_response_code(403);\n';
+            code += '    die("Ugyldig forespørsel.");\n';
+            code += '}\n\n';
+        }
 
-                // Bind-verdier
-                $stmt->bind_param(
-                    "${types}",
-                ${fields.map(f => `    $_${type}["${f}"]`).join(",\n")}
-                );
+        // Prepared statement
+        code += '<div class="phpComment">// Klargjør prepared statement</div>\n';
+        code += '$stmt = $tilkobling->prepare("' + sqlTemplate + '");\n';
+        code += 'if (!$stmt) {\n';
+        code += '    die("Prepare-feil: " . $tilkobling->error);\n';
+        code += '}\n\n';
 
-                $stmt->execute();
-                $datasett = $stmt->get_result();
+        // bind_param med én 's' per verdi
+        var bindTypes = '"' + 's'.repeat(values.length) + '"';
+        code += '<div class="phpComment">// Bind alle parametere fra ' + type + '-data</div>\n';
+        code += '$stmt->bind_param(' + bindTypes + ',\n';
+        code += values.map(function (v) { return '    $_' + type + '["' + v + '"]'; }).join(',\n');
+        code += '\n);\n\n';
 
-                if(!$datasett){
-                    die("SQL-feil: " . $tilkobling->error);
-                }
-                ?>`;
+        // Kjør og hent resultat
+        code += '<div class="phpComment">// Kjør spørringen og hent datasett</div>\n';
+        code += '$stmt->execute();\n';
+        code += '$datasett = $stmt->get_result();\n';
+        code += 'if (!$datasett) {\n';
+        code += '    die("SQL-feil: " . $tilkobling->error);\n';
+        code += '}\n';
+        code += '?&gt;';
 
-        s.output.text(php);
+        // Output
+        s.output.html('');
+        s.output.html(code);
     };
 
+    // init
     self.init = function () {
         self.setupBindings();
     };
 
     return self;
-
 }());

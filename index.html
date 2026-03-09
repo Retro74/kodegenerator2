@@ -100,24 +100,26 @@
 			Mekanismen her er å sette en $_SESSION['csrf_token'] til en tilfeldig verdi.<br> 
 			PHP-kode: <b><i>$_SESSION["csrf_token"] = bin2hex(random_bytes(32));</i></b><br>
 			Denne token må du da også sende med skjemaet, i en hidden input slik:<br>
-			HTML/PHP-kode: &lt;input type="hidden" name='csrf_token' value='&lt;?php echo($_SESSION["csrf_token"]) ?&gt;' &gt; </p>
+			HTML/PHP-kode: &lt;input type="hidden" name='csrf_token' value='&lt;?php echo($_SESSION["csrf_token"]) ?&gt;' &gt; <br>
+			<b><u>Merk:</u> Alle skjema som postes inn å ha denne med. kodeblokker hvor dette er aktuelt er merket med *</b><br>
+			Bruk: <a href="#genContainerCSRF">Generer CSRF-token</a></p>
 		</div>
 		<h2 id="id_h2_Innhold">Innhold</h2>
 		<ul>
 			<li><a href="#genContainer1">1| Koble til en database</a> </li>
 			<li><a href="#genContainer2">2| Plukke ut ett datasett</a> </li>
-			<li><a href="#genContainer3">3_1| Plukke ut datasett som er avhengig av en verdi</a> </li>
-			<li><a href="#genContainer3_2">3_2| Plukke ut datasett som er avhengig av flere verdier </a> </li>
-			<!--<li><a href="#genContainer3_3">3_3| Plukke ut datasett som er avhengig av flere verdier, hvor noen er hashet</a> </li>-->
+			<li><a href="#genContainer3">3_1| Plukke ut datasett som er avhengig av en verdi*</a> </li>
+			<li><a href="#genContainer3_2">3_2| Plukke ut datasett som er avhengig av flere verdier* </a> </li>
+			<li><a href="#genContainer3_3">3_3| Plukke ut datasett som er avhengig av flere verdier, hvor en er hashet (Brukernavn/passord-verifisering)*</a> </li>
 			<li><a href="#genContainer4">4_1| Presentere data i nettsiden</a> </li>
 			<li><a href="#genContainer4_2">4_2| Presentere data i en tabell med mulighet for insert, update og delete</a> </li>
 			<li><a href="#genContainer5">5_1| Presentere data i nettsiden hvis reultatet er ingen eller èn rad</a> </li>
 			<li><a href="#genContainer5_2">5_2| Videresende til en webside basert på om en spørring gir resultat eller ikke</a> </li>
 			<li><a href="#genContainer6">6| Presentere linker som er avhengig av et datafelt (parameter)</a> </li>
 			<li><a href="#genContainer7">7| Presentere bilder som er avhengig av et datafelt (parameter)</a> </li>
-			<li><a href="#genContainer8_1">8_1| Gjøre en innsetting (INSERT) med HTTP-POST (Form/Skjema)</a> </li>
-			<li><a href="#genContainer8">8_2| Gjøre en innsetting (INSERT) med HTTP-POST-back (Form/Skjema)</a> </li>
-            <li><a href="#genContainer8_3">8_3| Gjøre en oppdatering (UPDATE) med POST</a> </li>
+			<li><a href="#genContainer8_1">8_1| Gjøre en innsetting (INSERT) med HTTP-POST (Form/Skjema)*</a> </li>
+			<li><a href="#genContainer8">8_2| Gjøre en innsetting (INSERT) med HTTP-POST-back (Form/Skjema)*</a> </li>
+            <li><a href="#genContainer8_3">8_3| Gjøre en oppdatering (UPDATE) med POST*</a> </li>
             <li><a href="#genContainer8_4">8_4| Gjøre en sletting (DELETE) fra database med HTTP-GET/POST</a> </li>
             <li><a href="#genContainer9">9| Lage nedtrekksliste (rullegardinsknapp) fra databasetabell</a> </li>
 			<li><a href="#genContainer10">10| Bygge enkel SQL-spørring</a> </li>
@@ -133,6 +135,7 @@
 			<li><a href="#genContainer18">18| Vise feilmeldinger fra databasen</a> </li>
 			<li><a href="#genContainer19">19| Lukke databasetilkoblingen</a> </li>
 			<li><a href="#genContainer20">20| Gjenbruke et datasett</a> </li>
+			<li><a href="#genContainerCSRF">CSRF| Generere CSRF-token og HTML-skjemakode for CSRF-token</a> </li>
 
 
 		</ul>
@@ -196,12 +199,12 @@
 		<!--             3| SQL: $sql = "SELECT .....WHERE ... = $_POST/ $_GET ...
 		<!--- #################################################################################################-->
             <div class="genContainer" id="genContainer3">
-            <h2>3_1| Plukke ut datasett som er avhengig av en verdi
+            <h2>3_1| Plukke ut datasett som er avhengig av en verdi*
                 <div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
-                    <span class="tooltiptext">En SELECT-spørring mot databasen, med en brukersatt WHERE-begrensning.</span>
+                    <span class="tooltiptext">En SELECT-spørring mot databasen, med en brukersatt WHERE-begrensning. Husk at du må ha med CSRF-token i POST-skjema</span>
                 </div>
             </h2>
-            <p>Husk å markere posisjonen til verdien i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre)</p>
+            <p>Husk å markere posisjonen til verdien i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre). Husk CSRF-token ved POST av skjema</p>
             <form method="#">
                 <div class="formRow"><label for="gen3SQL">SQL-spørring:</label><textarea id="gen3SQL" rows="3" cols="40" placeholder="SELECT * &#10;FROM tbl_brukere &#10;WHERE brukernavn = ?" ></textarea></div>
 				<label for="gen3Type">Parameteropphav:</label>
@@ -233,10 +236,10 @@
 		<div class="genContainer" id="genContainer3_2">
 			<h2>3_2| Plukke ut datasett som er avhengig av flere verdier
 				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
-					<span class="tooltiptext">En SELECT-spørring mot databasen, med flere brukersatt WHERE-begrensninger.</span>
+					<span class="tooltiptext">En SELECT-spørring mot databasen, med flere brukersatt WHERE-begrensninger.Husk at du må ha med CSRF-token i POST-skjema</span>
 				</div>
 			</h2>
-			<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre)</p>
+			<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre). Husk at du må ha med CSRF-token i POST-skjema</p>
 			<form method="#">
 				<div class="formRow"><label for="gen3_2SQL">SQL-spørring:</label><textarea id="gen3_2SQL" rows="3" cols="40" placeholder="SELECT * &#10;FROM tbl_brukere &#10;WHERE fornavn = ? AND etternavn = ?" ></textarea></div>
 				<div class="formRow">
@@ -248,7 +251,7 @@
 					</select>
 				</div>
 				<div class="formRow"><label id="id_lbl_gen3_2Value" for="gen3_2Value">Parameternavn:</label><input type="text" id="gen3_2Value" class="inp_txt_class" placeholder="Kommaseparert. Eks: txt_fornavn, txt_etternavn" /></div>
-				<p>* PS. Dersom noen verdier er fra forskjellige kilder (POST, GET og/eller SESSION), må du endre dette manuelt<p>
+				<p><b>PS.</b> Dersom noen verdier er fra forskjellige kilder (POST, GET og/eller SESSION), må du endre dette manuelt<p>
 				<button type="button" id="gen3_2Button">Generer</button>
 			</form>
 			<div class="outputContainer">
@@ -301,6 +304,70 @@
 
 		</div>
 -->
+		<!--- #################################################################################################-->
+		<!--             3_3| SQL med WHERE-betingelser hvor noen felter er hashet                             -->
+		<!--- #################################################################################################-->
+		<div class="genContainer" id="genContainer3_3">
+			<h2>3_3| Plukke ut datasett som er avhengig av flere verdier, hvor en er hashet* (Brukernavn/passord-verifisering)
+				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+					<span class="tooltiptext">
+						En SELECT-spørring mot databasen med flere WHERE-betingelser, hvor noen felter er hashet.<br><br>
+						Velg <strong>bcrypt</strong> eller <strong>Argon2id</strong> for passord – disse bruker <code>password_hash()</code> og <code>password_verify()</code>.<br>
+						md5, sha256 og sha512 kan brukes for ikke-passord-felter.<br><br>
+						NB: Kun HTTP-POST støttes. Hashede felter må ligge til slutt i SQL-spørringen.
+					</span>
+				</div>
+			</h2>
+			<p>
+				Bruk <b>?</b> som plassholder for verdier i SQL-spørringen.<br>
+				Ved bcrypt/Argon2id: legg kun inn <b>?</b> for ikke-hashede felter – passordet verifiseres med <code>password_verify()</code>.
+			</p>
+			<form method="#">
+				<div class="formRow">
+					<label for="gen3_3SQL">SQL-spørring:</label>
+					<textarea id="gen3_3SQL" rows="3" cols="40"
+						placeholder="SELECT *&#10;FROM tbl_brukere&#10;WHERE brukernavn = ?"></textarea>
+				</div>
+				<div class="formRow">
+					<label id="id_lbl_gen3_3Value" for="gen3_3Value">Feltnavn (id/kandidatnøkkel):</label>
+					<br><input type="text" id="gen3_3Value" class="inp_txt_class"
+						placeholder="Kommaseparert ved flere. Eks: txt_brukernavn" />
+				</div><br>
+				<div class="formRow">
+					<label for="gen3_3HashType">Hash-algoritme:</label>
+					<select id="gen3_3HashType">
+						<option value="bcrypt">bcrypt – PASSWORD_BCRYPT (anbefalt for passord)</option>
+						<option value="argon2id">Argon2id – PASSWORD_ARGON2ID (anbefalt for passord)</option>
+						<option value="sha256">sha256 (kun for ikke-passord-felter)</option>
+						<option value="sha512">sha512 (kun for ikke-passord-felter)</option>
+						<option value="md5">md5 (ikke anbefalt)</option>
+					</select>
+				</div>
+				<br>
+				<div class="formRow">
+					<label id="id_lbl_gen3_3HashValue" for="gen3_3HashValue">Ikke hashet parameternavn fra form:</label>
+					<br><input type="text" id="gen3_3HashValue" class="inp_txt_class"
+						placeholder="Eks: txt_passord" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label id="id_lbl_gen3_3HashValue" for="gen3_3_DatabasefieldHashedValue">Hashet felt i database:</label>
+					<input type="text" id="gen3_3_DatabasefieldHashedValue" class="inp_txt_class"
+						placeholder="Eks: Passord_hash" />
+				</div><br>
+				<button type="button" id="gen3_3Button">Generer</button>
+			</form>
+			<div class="outputContainer">
+				<div class="tooltip">
+					<pre id="gen3_3Out" class="output"
+						onmouseup='{id_tooltiptext3_3.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+					<span class="tooltiptext" id="id_tooltiptext3_3">Klikk for å kopiere til utklippstavlen.</span>
+				</div>
+			</div>
+			<div class="upLinkContainer">
+				<a href="#id_h2_Innhold">Opp</a>
+			</div>
+		</div>
 		<!--- #################################################################################################-->
 		<!--             4_1| Presentere resultat av en sql
 		<!--- #################################################################################################-->
@@ -439,6 +506,7 @@
 						<span class="tooltiptext">Lager en HTML-link med paramter verdi fra databasen<br>Vanligvis en primærnøkkel til elementet.<br>Lager altså en link med URL, som brukes sammen med en HTTP-GET</br></span>
 					</div>
 				</h2>
+				<p>Merk at denne er avhengig av at du allerede har hentet ut en $rad i php-koden slik: <b><i>$rad = $datasett->fetch_assoc()</i></b></p>
 				<form method="#">
 					<div class="formRow"><label for="gen6URL">Nettadresse:</label><input type="text" id="gen6URL"  class="inp_txt_class" placeholder="adm_redigerBruker.php"/></div>
 					<div class="formRow"><label for="gen6Param">Parameternavn:</label><input type="text" id="gen6Param"  class="inp_txt_class" placeholder="pk_brukerID" /></div>
@@ -467,6 +535,7 @@
 						<span class="tooltiptext">Lager en html-kode for et bilde IMG, hvor et tabellfelt med URL (relativ adresse, i forhold til websiden) er SRC til bildet.</span>
 					</div>
 				</h2>
+				<p>Merk at denne er avhengig av at du allerede har hentet ut en $rad i php-koden slik: <b><i>$rad = $datasett->fetch_assoc()</i></b></p>
 				<form method="#">
 					<div class="formRow"><label for="gen7URL">Felt med bildeURL</label><input type="text" id="gen7URL"  class="inp_txt_class" placeholder="imgURL"/></div>
 					<div class="formRow"><label for="gen7Title">Felt med bildetittel</label><input type="text" id="gen7Title"  class="inp_txt_class" placeholder="imgTitle" /></div>
@@ -487,7 +556,7 @@
 		<!--             8_1| Lage innsetting med POST
 		<!--- #################################################################################################-->
     		<div class="genContainer" id="genContainer8_1">
-			<h2>8_1| Gjøre en innsetting (INSERT) med HTTP-POST (Form/Skjema)
+			<h2>8_1| Gjøre en innsetting (INSERT) med HTTP-POST (Form/Skjema)*
 				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
 					<span class="tooltiptext">PHP-siden med denne koden, tar imot en HTTP-POST, og setter det inn i databasen. </span>
 				</div>
@@ -519,7 +588,7 @@
 		<!--             8_2|Lage innsettingsskjemaer med POST-back
 		<!--- #################################################################################################-->
 	    	<div class="genContainer" id="genContainer8">
-			<h2>8_2| Gjøre en innsetting (INSERT) med HTTP-POST-back (Form/Skjema)
+			<h2>8_2| Gjøre en innsetting (INSERT) med HTTP-POST-back (Form/Skjema)*
 				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
 					<span class="tooltiptext">Websiden POST-er informasjonen tilbake til seg selv, og denne delen tar imot og setter inn i databasen.</span>
 				</div>
@@ -550,7 +619,7 @@
         <!--             8_3| Lage update med POST
         <!--- #################################################################################################-->
             <div class="genContainer" id="genContainer8_3">
-            <h2>8_3| Gjøre en oppdatering (UPDATE) med HTTP-POST
+            <h2>8_3| Gjøre en oppdatering (UPDATE) med HTTP-POST*
                 <div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
                     <span class="tooltiptext">PHP-siden med denne koden, tar imot en HTTP-POST, og oppdaterer en gitt oppføring i databasen</span>
                 </div>
@@ -1051,6 +1120,34 @@
 			</div>
 
 		</div>
+		<!--- #################################################################################################-->
+		<!--             CSRF| Generere HTML-skjema med CSRF-token                                            -->
+		<!--- #################################################################################################-->
+		<div class="genContainer" id="genContainerCSRF">
+			<h2>CSRF| Generere CSRF-token og HTML-skjemakode for CSRF-token
+				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+					<span class="tooltiptext">
+						Lag ditt HTML-skjema og legg til denne som et skjult CSRF-token.<br><br>
+						Tokenet lages med <code>bin2hex(random_bytes(32))</code> og lagres i <code>$_SESSION["csrf_token"]</code>.<br><br>
+						Lim PHP-delen øverst på siden som viser skjemaet.<br>
+						Lim skjema-delen i skjemaet ditt.
+					</span>
+				</div>
+			</h2>
+			<form method="#">
+				<button type="button" id="genCSRFButton">Generer</button>
+			</form>
+			<div class="outputContainer">
+				<div class="tooltip">
+					<pre id="genCSRFOut" class="output"
+						onmouseup='{id_tooltipCSRF.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+					<span class="tooltiptext" id="id_tooltipCSRF">Klikk for å kopiere til utklippstavlen.</span>
+				</div>
+			</div>
+			<div class="upLinkContainer">
+				<a href="#id_h2_Innhold">Opp</a>
+			</div>
+		</div>
 
 
 	</div>
@@ -1085,6 +1182,7 @@
 	<script src="js/gen18.js"></script>
 	<script src="js/gen19.js"></script>
 	<script src="js/gen20.js"></script>
+	<script src="js/genCSRF.js"></script>
 
 
 	<script>
@@ -1120,6 +1218,7 @@
 				gen18.init();
 				gen19.init();
 				gen20.init();
+				genCSRF.init();
         });
     </script>
     </body>

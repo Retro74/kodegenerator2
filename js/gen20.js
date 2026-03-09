@@ -1,45 +1,43 @@
-// gen20 widgtet object
-var gen20 = (function() {
+// gen20 widget object
+var gen20 = (function () {
 
     // settings
     var s = {
         datasetName: $('#gen20_datasetName'),
-        submit: $('#gen20Button'),
-        output: $('#gen20Out')
+        submit:      $('#gen20Button'),
+        output:      $('#gen20Out')
     };
 
-    // self object
     var self = {};
 
-
     // bindings
-    self.setupBindings = function() {
-        s.submit.on('click', function() {
+    self.setupBindings = function () {
+        s.submit.on('click', function () {
             self.generate();
         });
     };
 
-    //handlers
-    self.generate = function() {
-        var formatedCode = '&lt?php \n' +
-            '   mysqli_data_seek(' + s.datasetName.val() + ', 0);\n' +
-            '?&gt';
-        
-        
-        //clearing output
+    // handlers
+    self.generate = function () {
+
+        var datasetName = s.datasetName.val().trim();
+
+        var code = '';
+
+        code += '&lt;?php\n';
+        code += '<div class="phpComment">// Resett pekeren i datasettet til første rad</div>\n';
+        code += '$' + datasetName + '->data_seek(0);\n';
+        code += '?&gt;';
+
+        // Output
         s.output.html('');
-        
-        // adding output
-        s.output.html(formatedCode);
+        s.output.html(code);
     };
-    
+
     // init
-    self.init = function() {
+    self.init = function () {
         self.setupBindings();
     };
 
-    // return self
     return self;
 }());
-                
-                

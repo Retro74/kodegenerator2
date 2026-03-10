@@ -47,6 +47,7 @@ var genAjax = (function () {
 
         // ---- JavaScript / jQuery Ajax ----
         code += '<div class="phpComment">&lt;!-- Ajax-kall med jQuery --&gt;</div>\n';
+        code += '&lt;script src="https://code.jquery.com/jquery-3.7.1.min.js"&gt;&lt;/script&gt;\n\n'
         code += '&lt;script&gt;\n';
         code += '$(document).ready(function () {\n\n';
         code += '    <div class="phpComment">// Kjør Ajax-oppslag når brukeren skriver i inputfeltet</div>\n';

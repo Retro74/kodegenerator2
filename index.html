@@ -111,6 +111,7 @@
 			<li><a href="#genContainer3">3_1| Plukke ut datasett som er avhengig av en verdi*</a> </li>
 			<li><a href="#genContainer3_2">3_2| Plukke ut datasett som er avhengig av flere verdier* </a> </li>
 			<li><a href="#genContainer3_3">3_3| Plukke ut datasett som er avhengig av flere verdier, hvor en er hashet (Brukernavn/passord-verifisering)*</a> </li>
+			<li><a href="#genContainerHash">Hash| Hashing av et inputfelt fra POST med valgt algoritme*</a> </li>
 			<li><a href="#genContainer4">4_1| Presentere data i nettsiden</a> </li>
 			<li><a href="#genContainer4_2">4_2| Presentere data i en tabell med mulighet for insert, update og delete</a> </li>
 			<li><a href="#genContainer5">5_1| Presentere data i nettsiden hvis reultatet er ingen eller èn rad</a> </li>
@@ -370,6 +371,59 @@
 				<a href="#id_h2_Innhold">Opp</a>
 			</div>
 		</div>
+
+		<!--- #################################################################################################-->
+		<!--             genHash| Hashing av et inputfelt med valgt algoritme                                 -->
+		<!--- #################################################################################################-->
+		<div class="genContainer" id="genContainerHash">
+			<h2>Hash| Hashing av et inputfelt fra POST med valgt algoritme*
+				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+					<span class="tooltiptext">
+						Genererer PHP-kode som henter et POST-felt og hasher det med valgt algoritme.<br><br>
+						<strong>bcrypt</strong> og <strong>Argon2id</strong> anbefales for passord – de bruker <code>password_hash()</code> og inkluderer automatisk salt.<br><br>
+						<strong>md5, sha256 og sha512</strong> bruker <code>hash()</code> og er <em>ikke</em> anbefalt for passord, men kan brukes på andre felt.<br><br>
+						Koden viser også hvordan du verifiserer med <code>password_verify()</code> (bcrypt/Argon2id) eller sammenligner hash-strenger (md5/sha256/sha512).
+					</span>
+				</div>
+			</h2>
+
+			<div class="exampleContainer">
+				Eks: <div class="exampleText">$hash = password_hash($_POST["txt_passord"], PASSWORD_ARGON2ID);</div>
+			</div>
+
+			<form method="#">
+				<div class="formRow">
+					<label for="genHashInputField">Navn på POST-felt som skal hashes:</label>
+					<input type="text" id="genHashInputField" class="inp_txt_class"
+						placeholder="Eks: txt_passord" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genHashType">Hash-algoritme:</label>
+					<select id="genHashType">
+						<option value="argon2id">Argon2id – PASSWORD_ARGON2ID (mest anbefalt for passord)</option>
+						<option value="bcrypt">bcrypt – PASSWORD_BCRYPT (anbefalt for passord)</option>
+						<option value="sha512">sha512 – 128 tegn hex (ikke anbefalt for passord)</option>
+						<option value="sha256">sha256 – 64 tegn hex (ikke anbefalt for passord)</option>
+						<option value="md5">md5 – 32 tegn hex (ikke anbefalt)</option>
+					</select>
+				</div>
+				<br>
+				<button type="button" id="genHashButton">Generer</button>
+			</form>
+
+			<div class="outputContainer">
+				<div class="tooltip">
+					<pre id="genHashOut" class="output" onmouseup='{id_tooltiptext_hash.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+					<span class="tooltiptext" id="id_tooltiptext_hash">Klikk for å kopiere til utklippstavlen.</span>
+				</div>
+			</div>
+
+			<div class="upLinkContainer">
+				<a href="#id_h2_Innhold">Opp</a>
+			</div>
+		</div>
+
 		<!--- #################################################################################################-->
 		<!--             4_1| Presentere resultat av en sql
 		<!--- #################################################################################################-->
@@ -1277,6 +1331,7 @@
 	<script src="js/gen3.js"></script>
 	<script src="js/gen3_2.js"></script>
 	<script src="js/gen3_3.js"></script>
+	<script src="js/genHash.js"></script>
 	<script src="js/gen4.js"></script>
 	<script src="js/gen4_2.js"></script>
 	<script src="js/gen5.js"></script>
@@ -1316,6 +1371,7 @@
 				gen3.init();
 				gen3_2.init();
 				gen3_3.init();
+				genHash.init();
 				gen4.init();
 				gen4_2.init();
 				gen5.init();

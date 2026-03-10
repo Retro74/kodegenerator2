@@ -89,20 +89,20 @@
 	<div class="container">
 		<div class="PageTitle">
 			<h2>KODEGENERATOR FOR DYNAMISKE NETTSIDER</h2>
-			<p>Dette er et verktøy for deg som bruker en teksteditor til programmering av PHP-sider, tilpasset boka «Webutvikling».</p>
+			<p>Dette er et verktøy for deg som bruker en editor til programmering av PHP-sider, tilpasset boka «Webutvikling».</p>
 			<p>Fyll inn data, generer PHP-kode og kopier denne inn i ditt prosjekt.</p>
 			<p class="exampleText">Viderutviklet versjon av Gyldendals kodegenerator: 01/02/2017<br>
-			Siste versjon viderutviklet av Roger S. Mikalsen, ved Nesodden VGS: 28/05/2018</p>
-			<p>Last ned en forenklet <a href="kodegenerator.zip">offlineversjon</a>.</p>
+			Siste versjon viderutviklet av Roger S. Mikalsen, ved Nesodden VGS: 09/03/2026<br>
+			Siste versjon er er sikkerhetsrevidert av Claud Code AI 09/03/2026 </p>
 			<p>Klikk på de genererte PHP-kodesnuttene for å kopiere dem til utklippsblokka.</p>
-			<p>NB. Flere av disse skjemaene som generes sjekker at det er sider fra serveren som faktisk sender informasjonen.<br>
+			<p>NB. Flere av kodesnuttene som generes, sjekker at det er sider fra serveren som faktisk sender informasjonen.<br>
 			Dette forhindrer såkalt: Cross-Site Request Forgery (CSRF). <br>
-			Mekanismen her er å sette en $_SESSION['csrf_token'] til en tilfeldig verdi.<br> 
+			Sikkerhetsmekanismen her består av å sette en $_SESSION['csrf_token'] til en tilfeldig verdi.<br> 
 			PHP-kode: <b><i>$_SESSION["csrf_token"] = bin2hex(random_bytes(32));</i></b><br>
-			Denne token må du da også sende med skjemaet, i en hidden input slik:<br>
+			Denne token, må du da også sende med i HTML-skjemaet, i en hidden input slik:<br>
 			HTML/PHP-kode: &lt;input type="hidden" name='csrf_token' value='&lt;?php echo($_SESSION["csrf_token"]) ?&gt;' &gt; <br>
-			<b><u>Merk:</u> Alle skjema som postes inn å ha denne med. kodeblokker hvor dette er aktuelt er merket med *</b><br>
-			Bruk: <a href="#genContainerCSRF">Generer CSRF-token</a></p>
+			<b><u>Merk:</u> Alle skjema må ha denne med. Kodeblokker hvor dette er aktuelt er merket med *</b><br>
+			Bruk: <a href="#genContainerCSRF">Generer CSRF-token</a> for å genere CSRF-token, og plassere dette inn i skjemaet.</p>
 		</div>
 		<h2 id="id_h2_Innhold">Innhold</h2>
 		<ul>
@@ -120,7 +120,7 @@
 			<li><a href="#genContainer8_1">8_1| Gjøre en innsetting (INSERT) med HTTP-POST (Form/Skjema)*</a> </li>
 			<li><a href="#genContainer8">8_2| Gjøre en innsetting (INSERT) med HTTP-POST-back (Form/Skjema)*</a> </li>
             <li><a href="#genContainer8_3">8_3| Gjøre en oppdatering (UPDATE) med POST*</a> </li>
-            <li><a href="#genContainer8_4">8_4| Gjøre en sletting (DELETE) fra database med HTTP-GET/POST</a> </li>
+            <li><a href="#genContainer8_4">8_4| Gjøre en sletting (DELETE) fra database med HTTP-GET/POST*</a> </li>
             <li><a href="#genContainer9">9| Lage nedtrekksliste (rullegardinsknapp) fra databasetabell</a> </li>
 			<li><a href="#genContainer10">10| Bygge enkel SQL-spørring</a> </li>
 			<li><a href="#genContainer11">11| Sette en øktverdi (Session)</a> </li>
@@ -136,6 +136,8 @@
 			<li><a href="#genContainer19">19| Lukke databasetilkoblingen</a> </li>
 			<li><a href="#genContainer20">20| Gjenbruke et datasett</a> </li>
 			<li><a href="#genContainerCSRF">CSRF| Generere CSRF-token og HTML-skjemakode for CSRF-token</a> </li>
+			<li><a href="#genContainerAjax">Ajax_1| Ajax-oppslag mot database – klientside (HTML/PHP + JS)</a> </li>
+			<li><a href="#genContainerAjaxPHP">Ajax_2| Ajax-oppslag mot database – serverside (PHP)</a> </li>
 
 
 		</ul>
@@ -1150,6 +1152,123 @@
 		</div>
 
 
+		<!--- #################################################################################################-->
+		<!--             Ajax_1| Ajax-oppslag mot database - klientsiden (HTML + JS)                          -->
+		<!--- #################################################################################################-->
+		<div class="genContainer" id="genContainerAjax">
+			<h2>Ajax_1| Ajax-oppslag mot database – klientside (HTML + JS)
+				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+					<span class="tooltiptext">
+						Genererer et HTML-inputfelt og jQuery Ajax-kode som slår opp i databasen mens brukeren skriver.<br><br>
+						Resultatet vises i en div på siden uten at siden lastes på nytt.<br><br>
+						Eksempel 1: Sjekk om et brukernavn er ledig.<br>
+						Eksempel 2: Finn poststed basert på postnummer.<br><br>
+						Bruk <strong>Ajax_2</strong> for å generere PHP-siden som mottar og svarer på Ajax-kallet.
+					</span>
+				</div>
+			</h2>
+			<p>
+				Genererer HTML-inputfelt og jQuery Ajax-kall.<br>
+				PHP-mottakersiden lages med <strong>Ajax_2</strong> nedenfor.
+			</p>
+			<form method="#">
+				<div class="formRow">
+					<label for="genAjaxPhpFile">PHP-fil som mottar kallet:</label><br>
+					<input type="text" id="genAjaxPhpFile" class="inp_txt_class"
+						placeholder="Eks: ajax_brukernavn.php, ajax_poststed.php" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxInputField">Navn på inputfelt (HTML name/id):</label><br>
+					<input type="text" id="genAjaxInputField" class="inp_txt_class"
+						placeholder="Eks: txt_brukernavn, sel_postnummer" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxLookupField">Felt det slås opp i (databasekolonne):</label><br>
+					<input type="text" id="genAjaxLookupField" class="inp_txt_class"
+						placeholder="Eks: Brukernavn, Postnummer" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxReturnField">Felt som returneres fra databasen:</label><br>
+					<input type="text" id="genAjaxReturnField" class="inp_txt_class"
+						placeholder="Eks: Brukernavn, Poststed" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxResultDiv">ID på div som viser resultatet:</label><br>
+					<input type="text" id="genAjaxResultDiv" class="inp_txt_class"
+						placeholder="Eks: div_resultat" />
+				</div>
+				<br>
+				<button type="button" id="genAjaxButton">Generer</button>
+			</form>
+			<div class="outputContainer">
+				<div class="tooltip">
+					<pre id="genAjaxOut" class="output"
+						onmouseup='{id_tooltipAjax.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+					<span class="tooltiptext" id="id_tooltipAjax">Klikk for å kopiere til utklippstavlen.</span>
+				</div>
+			</div>
+			<div class="upLinkContainer">
+				<a href="#id_h2_Innhold">Opp</a>
+			</div>
+		</div>
+
+		<!--- #################################################################################################-->
+		<!--             Ajax_2| Ajax-oppslag mot database - serversiden (PHP)                                 -->
+		<!--- #################################################################################################-->
+		<div class="genContainer" id="genContainerAjaxPHP">
+			<h2>Ajax_2| Ajax-oppslag mot database – serverside (PHP)
+				<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+					<span class="tooltiptext">
+						Genererer PHP-siden som mottar Ajax-kallet fra <strong>Ajax_1</strong>.<br><br>
+						Svarer med JSON på formen:<br>
+						<code>{"funnet": true, "Poststed": "Oslo"}</code><br>
+						eller<br>
+						<code>{"funnet": false}</code><br><br>
+						Inkluderer POST-sjekk, CSRF-validering og prepared statement.
+					</span>
+				</div>
+			</h2>
+			<p>
+				Genererer PHP-filen som mottar Ajax-kallet og svarer med JSON.<br>
+				Husk å inkludere databasetilkoblingen øverst i PHP-filen.
+			</p>
+			<form method="#">
+				<div class="formRow">
+					<label for="genAjaxPHPTable">Tabellnavn:</label>
+					<input type="text" id="genAjaxPHPTable" class="inp_txt_class"
+						placeholder="Eks: tbl_brukere / tbl_postnummer" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxPHPLookupField">Felt det slås opp i (databasekolonne):</label>
+					<input type="text" id="genAjaxPHPLookupField" class="inp_txt_class"
+						placeholder="Eks: Brukernavn / Postnummer" />
+				</div>
+				<br>
+				<div class="formRow">
+					<label for="genAjaxPHPReturnField">Felt som returneres:</label>
+					<input type="text" id="genAjaxPHPReturnField" class="inp_txt_class"
+						placeholder="Eks: Epost / Poststed" />
+				</div>
+				<br>
+				<button type="button" id="genAjaxPHPButton">Generer</button>
+			</form>
+			<div class="outputContainer">
+				<div class="tooltip">
+					<pre id="genAjaxPHPOut" class="output"
+						onmouseup='{id_tooltipAjaxPHP.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+					<span class="tooltiptext" id="id_tooltipAjaxPHP">Klikk for å kopiere til utklippstavlen.</span>
+				</div>
+			</div>
+			<div class="upLinkContainer">
+				<a href="#id_h2_Innhold">Opp</a>
+			</div>
+		</div>
+
 	</div>
 
 	<!-- Legger til scripts for generering av php-kode-->
@@ -1183,6 +1302,9 @@
 	<script src="js/gen19.js"></script>
 	<script src="js/gen20.js"></script>
 	<script src="js/genCSRF.js"></script>
+	<script src="js/genAjax.js"></script>
+	<script src="js/genAjaxPHP.js"></script>
+	
 
 
 	<script>
@@ -1219,6 +1341,8 @@
 				gen19.init();
 				gen20.init();
 				genCSRF.init();
+				genAjax.init();
+				genAjaxPHP.init();
         });
     </script>
     </body>

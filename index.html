@@ -712,19 +712,19 @@
         </div>
 
         <!--- #################################################################################################-->
-        <!--             8_4| Lage update med POST
+        <!--             8_4| Lage DELETE med POST
         <!--- #################################################################################################-->
             <div class="genContainer" id="genContainer8_4" >
             <h2>8_4| Gjøre en sletting (DELETE) fra database med HTTP-POST*
                 <div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
-                    <span class="tooltiptext">PHP-siden med denne koden, tar imot en HTTP-POST med en verdi slletr oppføringen (-e) fra databasen med den oppgitte verdien fra POST</span>
+                    <span class="tooltiptext">PHP-siden med denne koden, tar imot en HTTP-POST med en verdi slleter oppføringen (-e) fra databasen med den oppgitte verdien fra POST</span>
                 </div>
             </h2>
-				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>'%s'</b>. (NB. Like mange '%s' som felter/parametre)</p>
+				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre)</p>
 				<form method="#">
                 <div class="formRow"><label for="gen8_4SQL">SQL-spørring:</label>
                     <textarea id="gen8_4SQL" rows="3" cols="40"
-                              placeholder="DELETE FROM tbl_gjestebok&#10;WHERE innleggID = '%s';"></textarea></div>
+                              placeholder="DELETE FROM tbl_gjestebok&#10;WHERE innleggID = '?';"></textarea></div>
 <!--                <div class="formRow"><label for="gen8_4PKOrigin">Nøkkel innsendt med:</label>-->
                     	<input type="hidden" id="gen8_4PKOrigin" value="$_POST">
 						</div>

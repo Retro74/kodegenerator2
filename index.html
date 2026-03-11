@@ -649,12 +649,12 @@
 					<span class="tooltiptext">Websiden POST-er informasjonen tilbake til seg selv, og denne delen tar imot og setter inn i databasen.</span>
 				</div>
 			</h2>
-				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>'%s'</b>. (NB. Like mange '%s' som felter/parametre)</p>
+				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre)</p>
 				<form method="#">
 				<div class="formRow">
 					<label for="gen8SQL">SQL-spørring:</label>
 					<textarea id="gen8SQL" rows="3" cols="40"
-							  placeholder="INSERT INTO tbl_brukere&#10;(column1, column2, column3)&#10;VALUES ('%s', '%s', '%s');" ></textarea></div>
+							  placeholder="INSERT INTO tbl_brukere&#10;(column1, column2, column3)&#10;VALUES (?, ?, ?);" ></textarea></div>
 				<div class="formRow"><label for="gen8Fields">Feltnavn:</label><input type="text" id="gen8Fields" placeholder="Kommaseparert. Eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
 				<div class="formRow"><label for="gen8Fwd">Videresend til:</label><input type="text" id="gen8Fwd" placeholder="Valgfri, eks: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
 				<button type="button" id="gen8Button">Generer</button>
@@ -680,11 +680,11 @@
                     <span class="tooltiptext">PHP-siden med denne koden, tar imot en HTTP-POST, og oppdaterer en gitt oppføring i databasen</span>
                 </div>
             </h2>
-				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>'%s'</b>. (NB. Like mange '%s' som felter/parametre)</p>
+				<p>Husk å markere posisjonene til verdiene i SQL-spørringen med <b>?</b>. (NB. Like mange ? som felter/parametre)</p>
 				<form method="#">
                 <div class="formRow"><label for="gen8_3SQL">SQL-spørring:</label>
                     <textarea id="gen8_3SQL" rows="3" cols="40"
-                              placeholder="UPDATE tbl_brukere&#10;SET column1 = '%s', column2 = '%s' &#10;WHERE brukernavn = '%s';"></textarea></div>
+                              placeholder="UPDATE tbl_brukere&#10;SET column1 = ?, column2 = ? &#10;WHERE brukernavn = ?;"></textarea></div>
                 <div class="formRow"><label for="gen8_3Fields">Oppdateringsfelter:</label><input type="text" id="gen8_3Fields" placeholder="Kommaseparert. Eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
                 <div class="formRow"><label for="gen8_3PKName">Nøkkelfelt:</label><input type="text" id="gen8_3PKName" placeholder="Primærnøkkel/kanditatnøkkel eks. pk_brukerID"  class="inp_txt_class"/></div>
                 <div class="formRow"><label for="gen8_3PKOrigin">Nøkkelverdiens opprinnelse:</label>
@@ -725,11 +725,9 @@
                 <div class="formRow"><label for="gen8_4SQL">SQL-spørring:</label>
                     <textarea id="gen8_4SQL" rows="3" cols="40"
                               placeholder="DELETE FROM tbl_gjestebok&#10;WHERE innleggID = '%s';"></textarea></div>
-                <div class="formRow"><label for="gen8_4PKOrigin">Nøkkel innsendt med:</label>
-                    <select id="gen8_4PKOrigin" onchange="gen8_3ChangeFocus()">
-                        <option value="$_GET">HTTP-GET (i URL)</option>
-                        <option value="$_POST" >HTTP-POST (i et Form)</option>
-                    </select></div>
+<!---->                <div class="formRow"><label for="gen8_4PKOrigin">Nøkkel innsendt med:</label>-->
+                    	<input type="hidden" id="gen8_4PKOrigin" value="$_POST">
+						</div>
                 <br>
                 <div class="formRow"><label for="gen8_4PKName">Nøkkelnavn:</label>
                     <input type="text" id="gen8_4PKName" placeholder="Primærnøkkel/kanditatnøkkelens opphav. eks. txt_innleggsID"  class="inp_txt_class"/></div>

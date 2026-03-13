@@ -51,6 +51,7 @@ var genAjax = (function () {
         code += '&lt;script&gt;\n';
         code += '$(document).ready(function () {\n\n';
         code += '    <div class="phpComment">// Kjør Ajax-oppslag når brukeren skriver i inputfeltet</div>\n';
+        code += '    <div class="phpComment">// Om verdien kommer fra en select endre "input" til "change"</div>\n';
         code += '    $("#' + inputField + '").on("input", function () {\n\n';
         code += '        var verdi = $(this).val().trim();\n\n';
         code += '        <div class="phpComment">// Ikke slå opp hvis feltet er tomt</div>\n';

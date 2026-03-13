@@ -28,7 +28,7 @@ var gen9 = (function () {
 
         var code = '';
 
-        code += '&lt;select name="' + id + '"&gt;\n';
+        code += '&lt;select name="' + id + ' id="' + id + '"&gt;\n';
         code += '<div class="phpComment">// For hver rad i datasettet lager PHP ett valg i nedtrekkslisten</div>\n';
         code += '    &lt;?php while ($rad = $datasett->fetch_assoc()) { ?&gt;\n';
         code += '        &lt;option value="&lt;?php echo htmlspecialchars($rad["' + fk + '"]); ?&gt;"&gt;\n';

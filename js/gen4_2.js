@@ -35,7 +35,7 @@ var gen4_2 = (function () {
         return [
             'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {',
             '    http_response_code(403);',
-            '    die("Ugyldig forespørsel.");',
+            '    die("Ugyldig forespørsel. Manglende CSRF-token.");',
             '}',
             ''
         ].join('\n');
@@ -62,8 +62,8 @@ var gen4_2 = (function () {
         var code = '';
 
         // ---- PHP-åpning og session/CSRF-oppsett ----
-        code += '<div class="phpComment">// Oppretter en CSRF-token for å verifisere at det er siden selv som sender</div>\n';
         code += '&lt;?php\n';
+        code += '<div class="phpComment">// Oppretter en CSRF-token for å verifisere at det er siden selv som sender</div>\n';
         code += 'if (empty($_SESSION["csrf_token"])) {\n';
         code += '    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));\n';
         code += '}\n\n';
@@ -100,9 +100,9 @@ var gen4_2 = (function () {
             code += ',\n        $_POST["' + pkField + '"]\n    );\n';
             code += '    $stmt->execute();\n';
             code += '    $stmt->close();\n';
-            code += '<div class="phpComment">// Redirect til visningsmodus etter lagring</div>\n';
-            code += '    header("Location: " . strtok($_SERVER["REQUEST_URI"], "?"));\n';
-            code += '    exit();\n';
+            //code += '<div class="phpComment">// Redirect til visningsmodus etter lagring</div>\n';
+            //code += '    header("Location: " . strtok($_SERVER["REQUEST_URI"], "?"));\n';
+            //code += '    exit();\n';
             code += '}\n\n';
         }
 
@@ -126,7 +126,7 @@ var gen4_2 = (function () {
 
         // ---- Hent GET-parametre for hvilken rad som redigeres ----
         code += '<div class="phpComment">// Hent hvilken rad som ev. er i redigeringsmodus (fra GET)</div>\n';
-        code += '$edit_id = isset($_GET["edit_id"]) ? (int)$_GET["edit_id"] : null;\n\n';
+        code += '$edit_id = isset($_GET["edit_id"]) ? $_GET["edit_id"] : null;\n\n';
 
         code += '?>\n\n';
 
@@ -160,7 +160,7 @@ var gen4_2 = (function () {
                 // Redigeringsskjema startes én gang (ved første felt)
                 if (f === fields[0]) {
                     code += '         &lt;?php if ($rad["' + pkField + '"] == $edit_id) { ?&gt;\n';
-                    code += '         &lt;form method="POST"&gt;\n';
+                    code += '         &lt;form method="POST" action="&lt;?php echo($_SERVER["PHP_SELF"]) ?&gt;" &gt;\n';
                     code += '         &lt;input type="hidden" name="command" value="do_update"&gt;\n';
                     code += '         &lt;input type="hidden" name="' + pkField + '" value="&lt;?php echo htmlspecialchars($rad["' + pkField + '"]); ?&gt;"&gt;\n';
                     code += '         &lt;input type="hidden" name="csrf_token" value="&lt;?php echo $_SESSION[\'csrf_token\']; ?&gt;"&gt;\n';
@@ -183,7 +183,7 @@ var gen4_2 = (function () {
             code += '            &lt;input type="submit" value="Lagre"&gt;\n';
             code += '            &lt;/form&gt;\n';
             code += '         &lt;?php } else { ?&gt;\n';
-            code += '            &lt;a href="?edit_id=&lt;?php echo (int)$rad["' + pkField + '"]; ?&gt;"&gt;Rediger&lt;/a&gt;\n';
+            code += '            &lt;a href="&lt;?php echo($_SERVER["REQUEST_URI"])?&gt;?edit_id=&lt;?php echo $rad["' + pkField + '"]; ?&gt;"&gt;Rediger&lt;/a&gt;\n';
             code += '         &lt;?php } ?&gt;\n';
             code += '      &lt;/td&gt;\n';
         }
@@ -193,6 +193,7 @@ var gen4_2 = (function () {
             code += '      &lt;td&gt;\n';
             code += '         &lt;form method="POST" onsubmit="return confirm(\'Er du sikker på at du vil slette denne raden?\');"&gt;\n';
             code += '            &lt;input type="hidden" name="command" value="delete"&gt;\n';
+            code += '            &lt;input type="hidden" name="csrf_token" value="&lt;?php echo($_SESSION["csrf_token"]) ?&gt;" &gt;\n';
             code += '            &lt;input type="hidden" name="' + pkField + '" value="&lt;?php echo htmlspecialchars($rad["' + pkField + '"]); ?&gt;"&gt;\n';
             code += '            &lt;input type="hidden" name="csrf_token" value="&lt;?php echo $_SESSION[\'csrf_token\']; ?&gt;"&gt;\n';
             code += '            &lt;input type="submit" value="Slett"&gt;\n';
@@ -215,9 +216,18 @@ var gen4_2 = (function () {
                 code += '         &lt;input type="text" name="' + f + '" placeholder="' + f + '"&gt;\n';
                 code += '      &lt;/td&gt;\n';
             });
-            if (s.chb_update.is(':checked')) code += '      &lt;td&gt;&lt;/td&gt;\n';
-            if (s.chb_delete.is(':checked')) code += '      &lt;td&gt;&lt;/td&gt;\n';
+//            if (s.chb_update.is(':checked')) code += '      &lt;td&gt;&lt;/td&gt;\n';
+//            if (s.chb_delete.is(':checked')) code += '      &lt;td&gt;&lt;/td&gt;\n';
+            if (s.chb_update.is(':checked') && s.chb_delete.is(':checked')) {
+            code += '      &lt;td colspan="2" &gt;&lt;input type="submit" value="Legg til"&gt;&lt;/td&gt;\n';
+            }else if (s.chb_update.is(':checked') || s.chb_delete.is(':checked')){
             code += '      &lt;td&gt;&lt;input type="submit" value="Legg til"&gt;&lt;/td&gt;\n';
+
+            }else{
+            code += '      &lt;input type="submit" value="Legg til"&gt;\n';
+
+            }
+            
             code += '   &lt;/form&gt;\n';
             code += '   &lt;/tr&gt;\n';
         }

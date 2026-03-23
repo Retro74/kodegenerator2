@@ -45,7 +45,7 @@ var genAjaxPHP = (function () {
         code += '<div class="phpComment">// CSRF-validering</div>\n';
         code += 'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {\n';
         code += '    http_response_code(403);\n';
-        code += '    die(json_encode(["feil" => "Ugyldig forespørsel."]));\n';
+        code += '    die(json_encode(["feil" => "Ugyldig forespørsel.  Manglende CSRF-token."]));\n';
         code += '}\n\n';
 
         // Sett JSON-header

@@ -44,7 +44,7 @@ var genHash = (function () {
         code += '<div class="phpComment">// CSRF-validering</div>\n';
         code += 'if (!isset($_POST["csrf_token"]) || $_POST["csrf_token"] !== $_SESSION["csrf_token"]) {\n';
         code += '    http_response_code(403);\n';
-        code += '    die("Ugyldig forespørsel.");\n';
+        code += '    die("Ugyldig forespørsel.  Manglende CSRF-token.");\n';
         code += '}\n\n';
 
         // Tom-sjekk

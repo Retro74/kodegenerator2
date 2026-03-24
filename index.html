@@ -136,6 +136,7 @@
 			<li><a href="#genContainer18">18| Vise feilmeldinger fra databasen</a> </li>
 			<li><a href="#genContainer19">19| Lukke databasetilkoblingen</a> </li>
 			<li><a href="#genContainer20">20| Gjenbruke et datasett</a> </li>
+			<li><a href="#genContainerInclude">21| Inkludere en annen PHP-fil</a></li>
 			<li><a href="#genContainerCSRF">CSRF| Generere CSRF-token og HTML-skjemakode for CSRF-token</a></li>
 			<li><a href="#genContainerAjax">Ajax_1| Ajax-oppslag mot database – klientside (HTML/PHP + JS)*</a></li>
 			<li><a href="#genContainerAjaxPHP">Ajax_2| Ajax-oppslag mot database – serverside (PHP)*</a></li>
@@ -1171,6 +1172,48 @@
 			</div>
 
 		</div>
+	
+		<!--- #################################################################################################-->
+        <!--             genInclude| Inkludere en annen PHP-fil-->
+        <!--- #################################################################################################-->
+        <div class="genContainer" id="genContainerInclude">
+            <h2>21| Inkludere en annen PHP-fil
+                <div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+                    <span class="tooltiptext">Henter inn og kjører innholdet fra en annen PHP-fil på gjeldende side.<br><br>
+                        Bruk <strong>include()</strong> for visningsfiler (gjerne for mindre deler) som gjenbrukes flere ganger .<br><br>
+                        Bruk <strong>include_once()</strong> når filen som skal inkluderes bare skal legges inn en gang (og det er tilstrekkelig, som f.eks. en databasetilkobling).</span>
+                </div>
+            </h2>
+            <div class="exampleContainer">Eks:
+                <div class="exampleText">include("header.php"); &nbsp;/&nbsp; include_once("db_connect.php");</div>
+            </div>
+            <form method="#">
+                <div class="formRow">
+                    <label for="genInclude_type">Type inkludering:</label>
+                    <select id="genInclude_type">
+                        <option value="include">Vanlig inkludering</option>
+                        <option value="include_once">Inkluder kun én gang</option>
+                    </select>
+                </div>
+                <div class="formRow">
+                    <label for="genInclude_filnavn">Filnavn:</label>
+                    <input type="text" id="genInclude_filnavn" class="inp_txt_class" placeholder="eks. header.php eller db_connect.php" />
+                </div>
+                <button type="button" id="genIncludeButton">Generer</button>
+            </form>
+            <div class="outputContainer">
+                <div class="tooltip">
+                    <pre id="genIncludeOut" class="output" onmouseup='{id_tooltiptext_include.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+                    <span class="tooltiptext" id="id_tooltiptext_include">Klikk for å kopiere til utklippstavlen.</span>
+                </div>
+            </div>
+            <div class="upLinkContainer">
+                <a href="#id_h2_Innhold">Opp</a>
+            </div>
+
+        </div>
+
+
 		<!--- #################################################################################################-->
 		<!--             CSRF| Generere HTML-skjema med CSRF-token                                            -->
 		<!--- #################################################################################################-->
@@ -1353,6 +1396,7 @@
 	<script src="js/gen18.js"></script>
 	<script src="js/gen19.js"></script>
 	<script src="js/gen20.js"></script>
+	<script src="js/genInclude.js"></script>
 	<script src="js/genCSRF.js"></script>
 	<script src="js/genAjax.js"></script>
 	<script src="js/genAjaxPHP.js"></script>
@@ -1393,6 +1437,7 @@
 				gen18.init();
 				gen19.init();
 				gen20.init();
+				genInclude.init();
 				genCSRF.init();
 				genAjax.init();
 				genAjaxPHP.init();

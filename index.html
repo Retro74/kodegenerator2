@@ -217,7 +217,7 @@
 					<option value="GET">Parameter i URL (http-GET)</option>
 					<option value="SESSION">Øktbasert serververdi(http-SESSION)</option>
 			</select>
-                <div class="formRow"><label for="gen3Value" id="id_lbl_gen3Value">Parameternavn:</label><input type="text" id="gen3Value" class="inp_txt_class" placeholder="txt_brukernavn" /></div>
+                <div class="formRow"><label for="gen3Value" id="id_lbl_gen3Value">Parameternavn:</label><input type="text" id="gen3Value" class="inp_txt_class" placeholder="F.eks. txt_brukernavn" /></div>
                 <div class="formRow">
                 </div>
                 <button type="button" id="gen3Button">Generer</button>
@@ -351,13 +351,13 @@
 				<div class="formRow">
 					<label id="id_lbl_gen3_3HashValue" for="gen3_3HashValue">Ikke hashet parameternavn fra form:</label>
 					<br><input type="text" id="gen3_3HashValue" class="inp_txt_class"
-						placeholder="Eks: txt_passord" />
+						placeholder="F.eks: txt_passord" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label id="id_lbl_gen3_3HashValue" for="gen3_3_DatabasefieldHashedValue">Hashet felt i database:</label>
 					<input type="text" id="gen3_3_DatabasefieldHashedValue" class="inp_txt_class"
-						placeholder="Eks: Passord_hash" />
+						placeholder="F.eks: Passord_hash" />
 				</div><br>
 				<button type="button" id="gen3_3Button">Generer</button>
 			</form>
@@ -396,7 +396,7 @@
 				<div class="formRow">
 					<label for="genHashInputField">Navn på POST-felt som skal hashes:</label><br>
 					<input type="text" id="genHashInputField" class="inp_txt_class"
-						placeholder="Eks: txt_passord" />
+						placeholder="F.eks: txt_passord" />
 				</div>
 				<br>
 				<div class="formRow">
@@ -473,10 +473,10 @@
 					<input type="text" id="gen4_2tabellNavn" placeholder="tbl_brukere" ></div>
 				<div class="formRow">
 					<label for="gen4_2Fields">Felter:</label>
-					<input type="text" id="gen4_2Fields" placeholder="Kommaseparert. Eks.: fornavn, etternavn, osv." class="inp_txt_class"/>*Prim.nøkkel kan ikke endres</div>
+					<input type="text" id="gen4_2Fields" placeholder="Kommaseparert. F.eks.: fornavn, etternavn, osv." class="inp_txt_class"/>*Prim.nøkkel kan ikke endres</div>
 				<div class="formRow">
 					<label for="gen4_2PK_Field">Primær-/kandidatnøkkel:</label>
-					<input type="text" id="gen4_2PK_Field" placeholder="Primær-/kandidatnøkkel i tabellen. Eks.: pk_brukernavn."  class="inp_txt_class"/></div>
+					<input type="text" id="gen4_2PK_Field" placeholder="Primær-/kandidatnøkkel i tabellen. F.eks.: pk_brukernavn."  class="inp_txt_class"/></div>
 				<div class="formRow"><label for="gen4_2chb_insert">Insert:</label><input type="checkbox" id="gen4_2chb_insert" checked  class="inp_chb_class"/></div>
 				<div class="formRow"><label for="gen4_2chb_update">Update:</label><input type="checkbox" id="gen4_2chb_update" checked  class="inp_chb_class"/></div>
 				<div class="formRow"><label for="gen4_2chb_delete">Delete:</label><input type="checkbox" id="gen4_2chb_delete" checked  class="inp_chb_class"/></div>
@@ -534,11 +534,11 @@
 			<form method="#">
 				<div class="formRow" >
 					<label for="gen5_2Fwd1">postivit resultat:</label>
-					<input type="text" id="gen5_2Fwd1" placeholder="URL eks: mem_velkommen.php"  class="inp_txt_class" />
+					<input type="text" id="gen5_2Fwd1" placeholder="URL. F.eks: mem_velkommen.php"  class="inp_txt_class" />
 				</div>
 				<div class="formRow" >
 					<label for="gen5_2Fwd2">negativ resultat:</label>
-					<input type="text" id="gen5_2Fwd2" placeholder="URL eks: pub_login.php"  class="inp_txt_class"/>
+					<input type="text" id="gen5_2Fwd2" placeholder="URL. F.eks: pub_login.php"  class="inp_txt_class"/>
 				</div>
 				<button type="button" id="gen5_2Button">Generer</button>
 			</form>
@@ -565,10 +565,10 @@
 				</h2>
 				<p>Merk at denne er avhengig av at du allerede har hentet ut en $rad i php-koden slik: <b><i>$rad = $datasett->fetch_assoc()</i></b></p>
 				<form method="#">
-					<div class="formRow"><label for="gen6URL">Nettadresse:</label><input type="text" id="gen6URL"  class="inp_txt_class" placeholder="adm_redigerBruker.php"/></div>
-					<div class="formRow"><label for="gen6Param">Parameternavn:</label><input type="text" id="gen6Param"  class="inp_txt_class" placeholder="pk_brukerID" /></div>
-					<div class="formRow"><label for="gen6Field">Feltnavn:</label><input type="text" id="gen6Field"  class="inp_txt_class" placeholder="pk_brukerID" /></div>
-					<div class="formRow"><label for="gen6Text">Linktekst:</label><input type="text" id="gen6Text"  class="inp_txt_class" placeholder="Rediger bruker"/></div>
+					<div class="formRow"><label for="gen6URL">Nettadresse:</label><input type="text" id="gen6URL"  class="inp_txt_class" placeholder="F.eks. adm_redigerBruker.php"/></div>
+					<div class="formRow"><label for="gen6Param">Parameternavn:</label><input type="text" id="gen6Param"  class="inp_txt_class" placeholder="F.eks. pk_brukerID" /></div>
+					<div class="formRow"><label for="gen6Field">Feltnavn:</label><input type="text" id="gen6Field"  class="inp_txt_class" placeholder="F.eks. pk_brukerID" /></div>
+					<div class="formRow"><label for="gen6Text">Linktekst:</label><input type="text" id="gen6Text"  class="inp_txt_class" placeholder="F.eks. Rediger bruker"/></div>
 					<button type="button" id="gen6Button">Generer</button>
 				</form>
 				<div class="outputContainer">
@@ -625,8 +625,8 @@
 				<div class="formRow"><label for="gen8_1SQL">SQL-spørring:</label>
 					<textarea id="gen8_1SQL" rows="3" cols="40"
 							  placeholder="INSERT INTO tbl_brukere&#10;(column1, column2, column3)&#10;VALUES (?, ?, ?);"></textarea></div>
-				<div class="formRow"><label for="gen8_1Fields">Feltnavn:</label><input type="text" id="gen8_1Fields" placeholder="Kommaseparert. Eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
-				<div class="formRow"><label for="gen8_1Fwd">Videresend til:</label><input type="text" id="gen8_1Fwd" placeholder="eks.: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
+				<div class="formRow"><label for="gen8_1Fields">Feltnavn:</label><input type="text" id="gen8_1Fields" placeholder="Kommaseparert. F.eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
+				<div class="formRow"><label for="gen8_1Fwd">Videresend til:</label><input type="text" id="gen8_1Fwd" placeholder="F.eks.: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
 				<button type="button" id="gen8_1Button">Generer</button>
 			</form>
 			<div class="outputContainer">
@@ -656,8 +656,8 @@
 					<label for="gen8SQL">SQL-spørring:</label>
 					<textarea id="gen8SQL" rows="3" cols="40"
 							  placeholder="INSERT INTO tbl_brukere&#10;(column1, column2, column3)&#10;VALUES (?, ?, ?);" ></textarea></div>
-				<div class="formRow"><label for="gen8Fields">Feltnavn:</label><input type="text" id="gen8Fields" placeholder="Kommaseparert. Eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
-				<div class="formRow"><label for="gen8Fwd">Videresend til:</label><input type="text" id="gen8Fwd" placeholder="Valgfri, eks: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
+				<div class="formRow"><label for="gen8Fields">Feltnavn:</label><input type="text" id="gen8Fields" placeholder="Kommaseparert. F.ks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
+				<div class="formRow"><label for="gen8Fwd">Videresend til:</label><input type="text" id="gen8Fwd" placeholder="Valgfri. F.eks: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
 				<button type="button" id="gen8Button">Generer</button>
 			</form>
 			<div class="outputContainer">
@@ -686,8 +686,8 @@
                 <div class="formRow"><label for="gen8_3SQL">SQL-spørring:</label>
                     <textarea id="gen8_3SQL" rows="3" cols="40"
                               placeholder="UPDATE tbl_brukere&#10;SET column1 = ?, column2 = ? &#10;WHERE brukernavn = ?;"></textarea></div>
-                <div class="formRow"><label for="gen8_3Fields">Oppdateringsfelter:</label><input type="text" id="gen8_3Fields" placeholder="Kommaseparert. Eks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
-                <div class="formRow"><label for="gen8_3PKName">Nøkkelfelt:</label><input type="text" id="gen8_3PKName" placeholder="Primærnøkkel/kanditatnøkkel eks. pk_brukerID"  class="inp_txt_class"/></div>
+                <div class="formRow"><label for="gen8_3Fields">Oppdateringsfelter:</label><input type="text" id="gen8_3Fields" placeholder="Kommaseparert. F.ks.: txt_brukernavn, txt_fornavn, txt_fornavn"  class="inp_txt_class"/></div>
+                <div class="formRow"><label for="gen8_3PKName">Nøkkelfelt:</label><input type="text" id="gen8_3PKName" placeholder="Primærnøkkel/kanditatnøkkel. F.eks. pk_brukerID"  class="inp_txt_class"/></div>
                 <div class="formRow"><label for="gen8_3PKOrigin">Nøkkelverdiens opprinnelse:</label>
                     <select id="gen8_3PKOrigin" onchange="gen8_3ChangeFocus()">
                         <option value="$_SESSION">Øktbasert i HTTP-SESSION</option>
@@ -696,8 +696,8 @@
                     </select></div>
                 <br>
                 <div class="formRow"><label for="gen8_3PKValue">Nøkkelverdiens navn:</label>
-                    <input type="text" id="gen8_3PKValue" placeholder="eks. brukernavn"  class="inp_txt_class"/></div>
-                <div class="formRow"><label for="gen8_3Fwd">Videresend til:</label><input type="text" id="gen8_3Fwd" placeholder="eks.: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
+                    <input type="text" id="gen8_3PKValue" F.eks. brukernavn"  class="inp_txt_class"/></div>
+                <div class="formRow"><label for="gen8_3Fwd">Videresend til:</label><input type="text" id="gen8_3Fwd" placeholder="F.eks.: pub_takkForDinRegistrering.php"  class="inp_txt_class"/></div>
                 <button type="button" id="gen8_3Button">Generer</button>
             </form>
             <div class="outputContainer">
@@ -728,8 +728,8 @@
                               placeholder="DELETE FROM tbl_gjestebok&#10;WHERE innleggID = '?';"></textarea></div>
                     	<input type="hidden" id="gen8_4PKOrigin" value="$_POST">
                 <div class="formRow"><label for="gen8_4PKName">Nøkkelnavn:</label>
-                    <input type="text" id="gen8_4PKName" placeholder="Primærnøkkel/kanditatnøkkelens opphav. eks. txt_innleggsID"  class="inp_txt_class"/></div>
-                <div class="formRow"><label for="gen8_4Fwd">Videresend til:</label><input type="text" id="gen8_4Fwd" placeholder="eks.: adm_gjestebok.php"  class="inp_txt_class"/></div>
+                    <input type="text" id="gen8_4PKName" placeholder="Primærnøkkel/kanditatnøkkelens opphav. F.eks. txt_innleggsID"  class="inp_txt_class"/></div>
+                <div class="formRow"><label for="gen8_4Fwd">Videresend til:</label><input type="text" id="gen8_4Fwd" placeholder="F.eks.: adm_gjestebok.php"  class="inp_txt_class"/></div>
                 <button type="button" id="gen8_4Button">Generer</button>
             </form>
             <div class="outputContainer">
@@ -754,9 +754,9 @@
 					</div>
 				</h2>
 				<form method="#">
-					<div class="formRow"><label for="gen9ID">HTML-elementnavn:</label><input type="text" id="gen9ID"  class="inp_txt_class" placeholder="Eks.: ddl_velgBruker" /></div>
-					<div class="formRow"><label for="gen9FK">Valgverdi:</label><input type="text" id="gen9FK"  class="inp_txt_class" placeholder="Eks.: pk_brukerID eller Poststed" /></div>
-					<div class="formRow"><label for="gen9Fields">Valgbeskrivelse/tekst:</label><input type="text" id="gen9Fields"  class="inp_txt_class" placeholder="Eks.: brukernavn eller Postnummer" /></div>
+					<div class="formRow"><label for="gen9ID">HTML-elementnavn:</label><input type="text" id="gen9ID"  class="inp_txt_class" placeholder="F.eks.: ddl_velgBruker" /></div>
+					<div class="formRow"><label for="gen9FK">Valgverdi:</label><input type="text" id="gen9FK"  class="inp_txt_class" placeholder="F.eks.: pk_brukerID eller Poststed" /></div>
+					<div class="formRow"><label for="gen9Fields">Valgbeskrivelse/tekst:</label><input type="text" id="gen9Fields"  class="inp_txt_class" placeholder="F.eks.: brukernavn eller Postnummer" /></div>
 					<button type="button" id="gen9Button">Generer</button>
 				</form>
 				<div class="outputContainer">
@@ -832,7 +832,7 @@
 			<form method="#">
 				<div class="formRow">
 					<label for="gen11SessionName">Øktens navn:</label>
-					<input type="text" id="gen11SessionName"  class="inp_txt_class" placeholder="eks. brukernavn eller loginstatus"/>
+					<input type="text" id="gen11SessionName"  class="inp_txt_class" placeholder="F.eks. brukernavn eller loginstatus"/>
 				</div>
 				<div class="formRow"><label for="gen11ValueOrigin">Verdiens opprinnelse:</label>
 					<select id="gen11ValueOrigin" onchange="gen11ChangeFocus()">
@@ -874,7 +874,7 @@
 			</h2>
 			<form method="#">
 				<div class="formRow"><label for="gen12SessionName">Øktens navn:</label>
-                    <input type="text" id="gen12SessionName" class="inp_txt_class" placeholder="eks. brukernavn"/></div>
+                    <input type="text" id="gen12SessionName" class="inp_txt_class" placeholder="F.eks. brukernavn"/></div>
 					<button type="button" id="gen12Button">Generer</button>
 			</form>
 			<div class="outputContainer">
@@ -899,11 +899,11 @@
                 </div>
             </h2>
             <form method="#">
-                <div class="formRow"><label for="gen13SessionName">Øktens navn:</label><input type="text" id="gen13SessionName"  class="inp_txt_class" placeholder="Eks.: loginstatus"/></div>
-                <div class="formRow"><label for="gen13SessionValue">Øktens verdi:</label><input type="text" id="gen13SessionValue" placeholder="eks. mem"  class="inp_txt_class"/></div>
+                <div class="formRow"><label for="gen13SessionName">Øktens navn:</label><input type="text" id="gen13SessionName"  class="inp_txt_class" placeholder="F.eks.: loginstatus"/></div>
+                <div class="formRow"><label for="gen13SessionValue">Øktens verdi:</label><input type="text" id="gen13SessionValue" placeholder="F.eks. mem"  class="inp_txt_class"/></div>
                 <div class="formRow" >
                     <label for="gen13Fwd">Forward URL:</label>
-                    <input type="text" id="gen13Fwd" placeholder="URL eks: pub_login.php"  class="inp_txt_class" />
+                    <input type="text" id="gen13Fwd" placeholder="URL. F.eks: pub_login.php"  class="inp_txt_class" />
                 </div>
                 <button type="button" id="gen13Button">Generer</button>
             </form>
@@ -935,11 +935,11 @@
                 </div>
                 <div class="formRow">
                     <label for="gen13_2SessionValues">Øktens verdier:</label>
-                    <input type="text" id="gen13_2SessionValues" placeholder="kommasepparert. eks. mem, adm"  class="inp_txt_class"/>
+                    <input type="text" id="gen13_2SessionValues" placeholder="kommasepparert. F.eks. mem, adm"  class="inp_txt_class"/>
                 </div>
                 <div class="formRow" >
                     <label for="gen13_2Fwd">Forward URL:</label>
-                    <input type="text" id="gen13_2Fwd" placeholder="URL eks: pub_login.php"  class="inp_txt_class" />
+                    <input type="text" id="gen13_2Fwd" placeholder="URL F.eks: pub_login.php"  class="inp_txt_class" />
                 </div>
                 <button type="button" id="gen13_2Button">Generer</button>
             </form>
@@ -967,7 +967,7 @@
             <form method="#">
                 <div class="formRow">
                     <label id="id_lbl_gen14_1SessionName" for="gen14_1sessionName">Øktnavn:</label>
-                    <input type="text" id="gen14_1sessionName" placeholder="eks. brukernavn eller loginstatus" class="inp_txt_class"/>
+                    <input type="text" id="gen14_1sessionName" placeholder="F.eks. brukernavn eller loginstatus" class="inp_txt_class"/>
                 </div>
                 <button type="button" id="gen14_1Button">Generer</button>
 
@@ -996,7 +996,7 @@
             <form method="#">
                 <div class="formRow">
                     <label id="id_lbl_gen14_2" for="gen14_2fwdURL">Videresen til side:</label>
-                    <input type="text" id="gen14_2fwdURL" placeholder="eks. pub_login.php" class="inp_txt_class"/>
+                    <input type="text" id="gen14_2fwdURL" placeholder="F.eks. pub_login.php" class="inp_txt_class"/>
                 </div>
                 <button type="button" id="gen14_2Button">Generer</button>
 
@@ -1025,7 +1025,7 @@
             <form method="#">
                 <div class="formRow">
                     <label id="id_lbl_gen15value" for="gen15value">Fast verdi:</label>
-                    <input type="text" id="gen15value" placeholder="eks. Hallo" class="inp_txt_class"/>
+                    <input type="text" id="gen15value" placeholder="F.eks. Hallo" class="inp_txt_class"/>
                 </div>
                 <button type="button" id="gen15Button">Generer</button>
 
@@ -1053,7 +1053,7 @@
             </h2>
             <form method="#">
                 <div class="formRow"><label for="gen16fwdUrl">Videresendt til URL:</label>
-                    <input type="text" id="gen16fwdUrl" class="inp_txt_class" placeholder="eks. pub_login.php eller http://vg.no" />
+                    <input type="text" id="gen16fwdUrl" class="inp_txt_class" placeholder="F.eks. pub_login.php eller http://vg.no" />
                 </div>
                 <button type="button" id="gen16Button">Generer</button>
             </form>
@@ -1156,7 +1156,7 @@
 			<form method="#">
 				<div class="formRow">
 					<label id="id_lbl_gen20_datasetName" for="gen20_datasetName">Datasettets navn:</label>
-					<input type="text" id="gen20_datasetName" placeholder="eks. $datasett" class="inp_txt_class"/>
+					<input type="text" id="gen20_datasetName" placeholder="F.eks. $datasett" class="inp_txt_class"/>
 				</div>
 				<button type="button" id="gen20Button">Generer</button>
 
@@ -1197,7 +1197,7 @@
                 </div>
                 <div class="formRow">
                     <label for="genInclude_filnavn">Filnavn:</label>
-                    <input type="text" id="genInclude_filnavn" class="inp_txt_class" placeholder="eks. header.php eller db_connect.php" />
+                    <input type="text" id="genInclude_filnavn" class="inp_txt_class" F.eks. header.php eller db_connect.php" />
                 </div>
                 <button type="button" id="genIncludeButton">Generer</button>
             </form>
@@ -1269,31 +1269,31 @@
 				<div class="formRow">
 					<label for="genAjaxPhpFile">PHP-fil som mottar kallet:</label><br>
 					<input type="text" id="genAjaxPhpFile" class="inp_txt_class"
-						placeholder="Eks: ajax_brukernavn.php, ajax_poststed.php" />
+						placeholder="F.eks: ajax_brukernavn.php, ajax_poststed.php" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxInputField">Navn på inputfelt (HTML name/id):</label><br>
 					<input type="text" id="genAjaxInputField" class="inp_txt_class"
-						placeholder="Eks: txt_brukernavn, sel_postnummer" />
+						placeholder="F.eks: txt_brukernavn, sel_postnummer" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxLookupField">Felt det slås opp i (databasekolonne):</label><br>
 					<input type="text" id="genAjaxLookupField" class="inp_txt_class"
-						placeholder="Eks: Brukernavn, Postnummer" />
+						placeholder="F.eks: Brukernavn, Postnummer" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxReturnField">Felt som returneres fra databasen:</label><br>
 					<input type="text" id="genAjaxReturnField" class="inp_txt_class"
-						placeholder="Eks: Brukernavn, Poststed" />
+						placeholder="F.eks: Brukernavn, Poststed" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxResultDiv">ID på div som viser resultatet:</label><br>
 					<input type="text" id="genAjaxResultDiv" class="inp_txt_class"
-						placeholder="Eks: div_resultat" />
+						placeholder="F.eks: div_resultat" />
 				</div>
 				<br>
 				<button type="button" id="genAjaxButton">Generer</button>
@@ -1334,19 +1334,19 @@
 				<div class="formRow">
 					<label for="genAjaxPHPTable">Tabellnavn:</label>
 					<input type="text" id="genAjaxPHPTable" class="inp_txt_class"
-						placeholder="Eks: tbl_brukere / tbl_postnummer" />
+						placeholder="F.eks: tbl_brukere / tbl_postnummer" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxPHPLookupField">Felt det slås opp i (databasekolonne):</label>
 					<input type="text" id="genAjaxPHPLookupField" class="inp_txt_class"
-						placeholder="Eks: Brukernavn / Postnummer" />
+						placeholder="F.eks: Brukernavn / Postnummer" />
 				</div>
 				<br>
 				<div class="formRow">
 					<label for="genAjaxPHPReturnField">Felt som returneres:</label>
 					<input type="text" id="genAjaxPHPReturnField" class="inp_txt_class"
-						placeholder="Eks: Epost / Poststed" />
+						placeholder="F.ks: Epost / Poststed" />
 				</div>
 				<br>
 				<button type="button" id="genAjaxPHPButton">Generer</button>

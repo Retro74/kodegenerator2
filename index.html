@@ -143,35 +143,49 @@
 
 
 		</ul>
-		<!--- #################################################################################################-->
-		<!--             1| Connectionstring
-		<!--- #################################################################################################-->
-			<div class="genContainer" id="genContainer1">
-				<h2>1| Koble til en database
-					<div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
-						<span class="tooltiptext">En tekststreng som forteller hvordan databasetilkoblingen fungerer. <br>
-							Brukes på alle sider som skal kobles til databasen</span>
-					</div>
-				</h2>
-				<div class="exampleContainer">Connectionstring eks.:
-					<div class="exampleText"> $tilkobling = mysqli_connect("localhost","root","password","db_myDatabaseName");</div></div>
-				<form method="#">
-					<div class="formRow"><label for="gen1User">Brukernavn:</label><input type="text" id="gen1User" class="inp_txt_class" placeholder="root"/></div>
-					<div class="formRow"><label for="gen1Pass">Passord:</label><input type="text" id="gen1Pass" class="inp_txt_class" placeholder="Vanligvis 'root' (for Mac), tom for PC" /></div>
-					<div class="formRow"><label for="gen1Db">Databasenavn:</label><input type="text" id="gen1Db" class="inp_txt_class" placeholder="Navn på databasen" /></div>
-					<button type="button" id="gen1Button">Generer</button>
-				</form>
-
-				<div class="outputContainer">
-					<div class="tooltip">
-						<pre id="gen1Out" class="output" onmouseup='{id_tooltiptext1.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
-						<span class="tooltiptext" id="id_tooltiptext1">Klikk for å kopiere til utklippstavlen.</span>
-					</div>
-				</div>
-				<div class="upLinkContainer">
-					<a href="#id_h2_Innhold">Opp</a>
-				</div>
-			</div>
+<!--- #################################################################################################-->
+        <!--             1| Connectionstring
+        <!--- #################################################################################################-->
+        <div class="genContainer" id="genContainer1">
+            <h2>1| Koble til en database
+                <div class="tooltip"><img src="images/QuestionMarkButton.png" height="16" width="16"/>
+                    <span class="tooltiptext">Oppretter en databasetilkobling med server, brukernavn, passord og databasenavn.<br><br>
+                        Brukes på alle sider som skal kobles til databasen – vanligvis lagret i en egen fil som db_connect.php.<br><br>
+                        <strong>NB:</strong> Ikke publiser denne filen på GitHub eller andre offentlige steder.</span>
+                </div>
+            </h2>
+            <div class="exampleContainer">Connectionstring eks.:
+                <div class="exampleText">$tilkobling = new mysqli("localhost", "root", "", "db_skole");</div>
+            </div>
+            <form method="#">
+                <div class="formRow">
+                    <label for="gen1Server">Server:</label>
+                    <input type="text" id="gen1Server" class="inp_txt_class" placeholder="localhost (for utvikling), el. IP-adresse (for produksjon)" />
+                </div>
+                <div class="formRow">
+                    <label for="gen1User">Brukernavn:</label>
+                    <input type="text" id="gen1User" class="inp_txt_class" placeholder="root" />
+                </div>
+                <div class="formRow">
+                    <label for="gen1Pass">Passord:</label>
+                    <input type="text" id="gen1Pass" class="inp_txt_class" placeholder="Standard er ingenting / tom for XAMPP på PC, 'root' for Mac" />
+                </div>
+                <div class="formRow">
+                    <label for="gen1Db">Databasenavn:</label>
+                    <input type="text" id="gen1Db" class="inp_txt_class" placeholder="Navn på databasen" />
+                </div>
+                <button type="button" id="gen1Button">Generer</button>
+            </form>
+            <div class="outputContainer">
+                <div class="tooltip">
+                    <pre id="gen1Out" class="output" onmouseup='{id_tooltiptext1.innerHTML="Innholdet er kopiert til utklippsblokka"}'></pre>
+                    <span class="tooltiptext" id="id_tooltiptext1">Klikk for å kopiere til utklippstavlen.</span>
+                </div>
+            </div>
+            <div class="upLinkContainer">
+                <a href="#id_h2_Innhold">Opp</a>
+            </div>
+        </div>
 
 		<!--- #################################################################################################-->
 		<!--             2| SQL: $sql = "SELECT .....
